@@ -1,0 +1,46 @@
+# =========================================
+# WordPress en raiz: versionar SOLO wp-content
+# =========================================
+
+# 1) Ignorar TODO por defecto
+*
+
+# 2) Permitir archivos base del repositorio
+!.gitignore
+!README.md
+!.github/
+!.github/**
+
+# 3) Permitir SOLO wp-content (temas, plugins, etc.)
+!wp-content/
+!wp-content/**
+
+# 4) Dentro de wp-content: ignorar temporales comunes
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backups/
+wp-content/wflogs/
+wp-content/debug.log
+
+# 5) Seguridad: nunca subir config local
+wp-config.php
+wp-config-*.php
+
+# 6) Base de datos: nunca versionar dumps
+db/*.sql
+db/*.gz
+db/*.zip
+
+# 7) Uploads (decisión)
+# Si el repo se vuelve pesado, descomenta:
+# wp-content/uploads/
+
+# 8) Basura de sistema/editor (aunque ya esté cubierto por "*", lo dejo por claridad)
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.log
+*.tmp
+*.swp
