@@ -1,5 +1,5 @@
 # =========================================
-# WordPress en raiz: versionar SOLO wp-content
+# WordPress en raiz: versionar SOLO wp-content + archivos de infraestructura
 # =========================================
 
 # 1) Ignorar TODO por defecto
@@ -8,6 +8,10 @@
 # 2) Permitir archivos base del repositorio
 !.gitignore
 !README.md
+!docker-compose.yml
+!.env.example
+!scripts/
+!scripts/**
 !.github/
 !.github/**
 
@@ -25,6 +29,7 @@ wp-content/debug.log
 # 5) Seguridad: nunca subir config local
 wp-config.php
 wp-config-*.php
+.env
 
 # 6) Base de datos: nunca versionar dumps
 db/*.sql
