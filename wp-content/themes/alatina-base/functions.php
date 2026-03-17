@@ -49,11 +49,86 @@ function alatina_base_assets() {
 }
 add_action('wp_enqueue_scripts', 'alatina_base_assets');
 
+function alatina_base_get_navigation_items() {
+    return array(
+        array(
+            'label' => __('Inicio', 'alatina-base'),
+            'slug'  => '',
+        ),
+        array(
+            'label' => __('Nuestra escuela', 'alatina-base'),
+            'slug'  => 'nuestra-escuela',
+        ),
+        array(
+            'label' => __('Noticias', 'alatina-base'),
+            'slug'  => 'noticias',
+        ),
+        array(
+            'label' => __('Documentos', 'alatina-base'),
+            'slug'  => 'documentos',
+        ),
+        array(
+            'label' => __('Contacto', 'alatina-base'),
+            'slug'  => 'contacto',
+        ),
+    );
+}
+
+function alatina_base_get_section_links() {
+    return array(
+        'nuestra-escuela' => array(
+            'label' => __('Nuestra escuela', 'alatina-base'),
+            'slug'  => 'nuestra-escuela',
+        ),
+        'noticias' => array(
+            'label' => __('Noticias', 'alatina-base'),
+            'slug'  => 'noticias',
+        ),
+        'centro-de-padres' => array(
+            'label' => __('Centro de Padres', 'alatina-base'),
+            'slug'  => 'centro-de-padres',
+        ),
+        'documentos' => array(
+            'label' => __('Documentos', 'alatina-base'),
+            'slug'  => 'documentos',
+        ),
+        'contacto' => array(
+            'label' => __('Contacto', 'alatina-base'),
+            'slug'  => 'contacto',
+        ),
+    );
+}
+
+function alatina_base_get_page_url($slug = '') {
+    if (empty($slug)) {
+        return home_url('/');
+    }
+
+    $page = get_page_by_path($slug);
+
+    if ($page instanceof WP_Post) {
+        return get_permalink($page);
+    }
+
+    return home_url('/' . trim($slug, '/') . '/');
+}
+
 function alatina_base_primary_menu_fallback() {
     echo '<ul id="primary-menu" class="menu menu--primary">';
-    echo '<li class="menu-item"><a href="' . esc_url(home_url('/')) . '">' . esc_html__('Inicio', 'alatina-base') . '</a></li>';
-    echo '<li class="menu-item"><a href="' . esc_url(home_url('/nuestra-escuela/')) . '">' . esc_html__('Nuestra escuela', 'alatina-base') . '</a></li>';
-    echo '<li class="menu-item"><a href="' . esc_url(home_url('/noticias/')) . '">' . esc_html__('Noticias', 'alatina-base') . '</a></li>';
-    echo '<li class="menu-item"><a href="' . esc_url(home_url('/contacto/')) . '">' . esc_html__('Contacto', 'alatina-base') . '</a></li>';
+
+    foreach (alatina_base_get_navigation_items() as $item) {
+        echo '<li class="menu-item"><a href="' . esc_url(alatina_base_get_page_url($item['slug'])) . '">' . esc_html($item['label']) . '</a></li>';
+    }
+
+    echo '</ul>';
+}
+
+function alatina_base_footer_menu_fallback() {
+    echo '<ul class="menu menu--footer">';
+
+    foreach (alatina_base_get_navigation_items() as $item) {
+        echo '<li class="menu-item"><a href="' . esc_url(alatina_base_get_page_url($item['slug'])) . '">' . esc_html($item['label']) . '</a></li>';
+    }
+
     echo '</ul>';
 }

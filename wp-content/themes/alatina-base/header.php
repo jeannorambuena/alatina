@@ -8,6 +8,13 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <header class="site-header">
+  <div class="site-header__topbar">
+    <div class="wrap site-header__topbar-inner">
+      <p class="site-header__kicker"><?php esc_html_e('Sitio institucional', 'alatina-base'); ?></p>
+      <p class="site-header__meta"><?php bloginfo('name'); ?></p>
+    </div>
+  </div>
+
   <div class="wrap site-header__inner">
     <div class="branding">
       <a class="branding__link" href="<?php echo esc_url(home_url('/')); ?>" rel="home">
