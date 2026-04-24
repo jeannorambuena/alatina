@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Escudo Escuela América Latina Romeral</title>
+  <desc id="desc">Escudo azul con texto Escuela América Latina Romeral y silueta de Sudamérica.</desc>
+  <defs>
+    <linearGradient id="shieldBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e74da"/>
+      <stop offset="55%" stop-color="#0e56b5"/>
+      <stop offset="100%" stop-color="#0a3f8d"/>
+    </linearGradient>
+    <radialGradient id="orbBlue" cx="35%" cy="28%" r="70%">
+      <stop offset="0%" stop-color="#83c5ff"/>
+      <stop offset="38%" stop-color="#2f92f2"/>
+      <stop offset="100%" stop-color="#0d4ca8"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#082956" flood-opacity="0.22"/>
+    </filter>
+    <path id="topArc" d="M 118 126 A 150 150 0 0 1 394 126"/>
+    <path id="midArc" d="M 96 214 A 176 176 0 0 1 416 214"/>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <path d="M256 22c48 33 121 44 186 44-1 151-16 288-186 424C86 354 71 217 70 66c65 0 138-11 186-44Z" fill="#0c3f8b"/>
+    <path d="M256 34c45 31 114 41 176 41-2 143-18 270-176 403C98 345 82 218 80 75c62 0 131-10 176-41Z" fill="#f4f7fb"/>
+    <path d="M256 46c42 29 108 38 166 38-3 136-19 255-166 382C109 339 93 220 90 84c58 0 124-9 166-38Z" fill="url(#shieldBlue)"/>
+
+    <circle cx="256" cy="276" r="104" fill="#f4f7fb"/>
+    <circle cx="256" cy="276" r="92" fill="url(#orbBlue)" stroke="#0b3f8e" stroke-width="4"/>
+    <circle cx="256" cy="276" r="110" fill="none" stroke="#dfe5ee" stroke-width="10"/>
+    <circle cx="256" cy="276" r="96" fill="none" stroke="#f8fbff" stroke-width="5" opacity="0.7"/>
+
+    <path d="M226 215l14-10 6 4 14-1 14 7 8 1 12 8 4 10 14 3 11 12-2 10-7 7-1 9-7 9-1 13-9 15-12 6-2 17-12 5-5 11-8 0-6 16-10 13-2 17-8 6-4-4 1-12-6-11-2-16 1-11-7-19-14-11-4-13-8-8-3-12-12-12 0-11 6-8 0-12 8-8 5-14 10-7 8-1z" fill="#f9fbff" stroke="#8a98aa" stroke-width="2.5" stroke-linejoin="round"/>
+
+    <text font-family="Inter, Arial, sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">
+      <textPath href="#topArc" startOffset="50%" font-size="34">ESCUELA</textPath>
+    </text>
+    <text font-family="Inter, Arial, sans-serif" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">
+      <textPath href="#midArc" startOffset="50%" font-size="44">AMÉRICA LATINA</textPath>
+    </text>
+    <text x="256" y="408" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">ROMERAL</text>
+  </g>
+</svg>

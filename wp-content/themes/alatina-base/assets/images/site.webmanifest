@@ -1,0 +1,15 @@
+{
+  "name": "Escuela América Latina",
+  "short_name": "América Latina",
+  "icons": [
+    {
+      "src": "/wp-content/themes/alatina-base/assets/images/escudo-america-latina.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#0f56b2",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}

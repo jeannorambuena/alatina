@@ -1,0 +1,14 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" fill="#EEF4FA"/>
+  <rect x="88" y="92" width="1024" height="576" rx="34" fill="#F9FBFD"/>
+  <rect x="136" y="150" width="280" height="404" rx="28" fill="#154A82"/>
+  <rect x="460" y="150" width="592" height="72" rx="22" fill="#DCE8F3"/>
+  <rect x="460" y="252" width="484" height="24" rx="12" fill="#B9CFE3"/>
+  <rect x="460" y="296" width="420" height="24" rx="12" fill="#D3E0EC"/>
+  <rect x="460" y="360" width="164" height="194" rx="24" fill="#E7EFF6"/>
+  <rect x="650" y="360" width="164" height="194" rx="24" fill="#D8E5F1"/>
+  <rect x="840" y="360" width="164" height="194" rx="24" fill="#E7EFF6"/>
+  <circle cx="276" cy="250" r="82" fill="#F7D284"/>
+  <path d="M276 356C330.124 356 374 312.124 374 258H178C178 312.124 221.876 356 276 356Z" fill="#2C74B6"/>
+  <path d="M276 398L311.267 469.457L390.151 480.923L333.075 536.539L346.535 615.103L276 578.029L205.465 615.103L218.925 536.539L161.849 480.923L240.733 469.457L276 398Z" fill="#F4C44F"/>
+</svg>
