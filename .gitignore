@@ -66,3 +66,7 @@ Desktop.ini
 *.log
 *.tmp
 *.swp
+
+# 11) Ruido local temporal
+wp-content/themes/alatina-base/_restore-points/
+wp-content/plugins/alatina-school-calendar/
