@@ -18,10 +18,16 @@ TITLE="${1:-}"
 CONTENT="${2:-}"
 EXCERPT="${3:-}"
 CATEGORY="${4:-}"
+FEATURED_MEDIA_ID="${5:-}"
 
 if [[ -z "$TITLE" || -z "$CONTENT" ]]; then
   echo "Uso:"
-  echo "  scripts/wordpress/create-draft.sh \"Título\" \"Contenido\" \"Extracto opcional\" \"Categoría opcional\""
+  echo "  scripts/wordpress/create-draft.sh \"Título\" \"Contenido\" \"Extracto opcional\" \"Categoría opcional\" \"ID imagen destacada opcional\""
+  exit 2
+fi
+
+if [[ -n "$FEATURED_MEDIA_ID" && ! "$FEATURED_MEDIA_ID" =~ ^[0-9]+$ ]]; then
+  echo "ERROR: FEATURED_MEDIA_ID debe ser numérico. Valor recibido: $FEATURED_MEDIA_ID" >&2
   exit 2
 fi
 
@@ -84,7 +90,7 @@ PY
   fi
 fi
 
-python3 - "$TITLE" "$CONTENT" "$EXCERPT" "$CATEGORY_ID" > "$TMP_PAYLOAD" <<'PY'
+python3 - "$TITLE" "$CONTENT" "$EXCERPT" "$CATEGORY_ID" "$FEATURED_MEDIA_ID" > "$TMP_PAYLOAD" <<'PY'
 import json
 import sys
 import html
@@ -93,6 +99,7 @@ title = sys.argv[1]
 content = sys.argv[2]
 excerpt = sys.argv[3] if len(sys.argv) > 3 else ""
 category_id = sys.argv[4] if len(sys.argv) > 4 else ""
+featured_media_id = sys.argv[5] if len(sys.argv) > 5 else ""
 
 paragraphs = [p.strip() for p in content.splitlines() if p.strip()]
 html_content = "\n".join(f"<p>{html.escape(p)}</p>" for p in paragraphs)
@@ -106,6 +113,9 @@ payload = {
 
 if category_id:
     payload["categories"] = [int(category_id)]
+
+if featured_media_id:
+    payload["featured_media"] = int(featured_media_id)
 
 print(json.dumps(payload, ensure_ascii=False))
 PY
@@ -136,10 +146,12 @@ with open(sys.argv[1], "r", encoding="utf-8") as f:
     data = json.load(f)
 
 categories = data.get("categories", [])
+featured_media = data.get("featured_media", 0)
 
 print(f"ID: {data.get('id')}")
 print(f"Estado: {data.get('status')}")
 print(f"Título: {data.get('title', {}).get('rendered')}")
 print(f"Categorías: {categories}")
+print(f"Imagen destacada: {featured_media}")
 print(f"Link: {data.get('link')}")
 PY
