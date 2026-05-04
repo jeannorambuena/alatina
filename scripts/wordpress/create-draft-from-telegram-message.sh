@@ -51,6 +51,13 @@ print(data["title"])
 PY
 )"
 
+CATEGORY="$(python3 - "$TMP_PARSED" <<'PY'
+import json, sys
+data = json.load(open(sys.argv[1], encoding="utf-8"))
+print(data.get("category") or "")
+PY
+)"
+
 EXCERPT="$(python3 - "$TMP_PARSED" <<'PY'
 import json, sys
 data = json.load(open(sys.argv[1], encoding="utf-8"))
@@ -61,12 +68,10 @@ PY
 CONTENT="$(python3 - "$TMP_PARSED" <<'PY'
 import json, sys
 data = json.load(open(sys.argv[1], encoding="utf-8"))
-category = data.get("category") or "Sin categoría"
-content = data.get("content") or ""
-print(f"Categoría sugerida: {category}\n\n{content}")
+print(data.get("content") or "")
 PY
 )"
 
 echo ""
 echo "Creando borrador en WordPress..."
-"$CREATE_DRAFT" "$TITLE" "$CONTENT" "$EXCERPT"
+"$CREATE_DRAFT" "$TITLE" "$CONTENT" "$EXCERPT" "$CATEGORY"
