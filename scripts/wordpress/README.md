@@ -199,3 +199,48 @@ Antes de usar fotos reales en noticias escolares, revisar:
 - Que la noticia quede siempre como borrador para revisión antes de publicación.
 
 El flujo desde Telegram debe seguir creando solo borradores, no publicaciones directas.
+
+
+## Flujo oficial Telegram con foto y confirmación validado
+
+Ya se validó el flujo completo desde Telegram usando foto y texto estructurado en el mismo mensaje.
+
+Flujo validado:
+
+1. Jean envía una foto por Telegram con el formato `NUEVA NOTICIA BORRADOR:`.
+2. OpenClaw interpreta título, categoría, extracto y texto.
+3. OpenClaw detecta imagen adjunta.
+4. OpenClaw ofrece opciones seguras:
+   - crear borrador con imagen
+   - crear borrador sin imagen
+   - cambiar foto
+   - editar titulo
+   - editar categoria
+   - editar extracto
+   - editar texto
+   - descartar
+5. Jean confirma `crear borrador con imagen`.
+6. OpenClaw sube la imagen a WordPress Media.
+7. OpenClaw crea un post en estado `draft`.
+8. WordPress asigna categoría real `Comunicados`.
+9. WordPress asigna la imagen como `featured_media`.
+10. No se publica directamente.
+
+Última prueba final validada:
+
+- Post ID: 214
+- Estado: draft
+- Título: Prueba definitiva opciones foto
+- Categoría: Comunicados
+- Categoría WordPress: ID 14
+- Media ID: 213
+- Tipo MIME: image/jpeg
+- Imagen destacada: Media ID 213
+- URL imagen: https://alatina.cl/wp-content/uploads/2026/05/file_28-83d006e5-9cba-4737-9711-5b75e36a5a59.jpg
+
+Regla final:
+
+- Si hay foto, no usar la opción simple `crear borrador`.
+- Si hay foto, ofrecer `crear borrador con imagen` y `crear borrador sin imagen`.
+- Si no hay foto, se permite `crear borrador`.
+- Nunca ofrecer `publicar` desde Telegram.
