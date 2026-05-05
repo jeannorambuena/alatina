@@ -150,3 +150,52 @@ Pendiente técnico:
 3. Pasar la ruta local al script integrador.
 4. Crear borrador con imagen destacada.
 5. Mantener confirmación previa antes de crear.
+
+
+## Telegram con fotografía real validado
+
+Ya se validó que una fotografía enviada desde Telegram puede usarse para crear un borrador en WordPress con imagen destacada.
+
+Flujo validado:
+
+1. Jean envía una fotografía al bot de Telegram.
+2. OpenClaw recibe e interpreta la imagen.
+3. OpenClaw guarda la imagen localmente en Nitro.
+4. La imagen queda disponible en `~/.openclaw/media/inbound/`.
+5. El script integrador sube la imagen a WordPress Media.
+6. WordPress entrega un Media ID.
+7. El script crea un borrador.
+8. El borrador queda con categoría real.
+9. El borrador queda con imagen destacada.
+
+Última prueba validada:
+
+- Archivo local:
+  `/home/srv-openclaw/.openclaw/media/inbound/file_24---4e581d8d-12a7-4400-a6b5-8b3fcfb9ea6e.jpg`
+- Media ID: 211
+- Post ID: 212
+- Estado: draft
+- Categoría: Comunicados
+- Categoría WordPress: ID 14
+- Imagen destacada: Media ID 211
+- Tipo MIME: image/jpeg
+
+Comando validado:
+
+scripts/wordpress/create-draft-with-media.sh \
+  /home/srv-openclaw/.openclaw/media/inbound/file_24---4e581d8d-12a7-4400-a6b5-8b3fcfb9ea6e.jpg \
+  "Prueba noticia usando foto recibida por Telegram" \
+  "Contenido de prueba." \
+  "Extracto de prueba." \
+  "Comunicados"
+
+## Regla de seguridad para fotografías escolares
+
+Antes de usar fotos reales en noticias escolares, revisar:
+
+- Que la imagen sea apropiada para publicación institucional.
+- Que exista autorización para publicar imágenes de estudiantes, apoderados o funcionarios cuando corresponda.
+- Que no exponga información sensible, documentos privados, direcciones, teléfonos, RUT u otros datos personales.
+- Que la noticia quede siempre como borrador para revisión antes de publicación.
+
+El flujo desde Telegram debe seguir creando solo borradores, no publicaciones directas.
