@@ -15,6 +15,12 @@
 !.github/
 !.github/**
 
+# OpenClaw skill snapshots permitidos
+!docs/
+!docs/openclaw-skills/
+!docs/openclaw-skills/alatina-wordpress-publisher/
+!docs/openclaw-skills/alatina-wordpress-publisher/SKILL.md
+
 # 3) Permitir archivos de entorno reproducible
 !.env.example
 !docker-compose.yml

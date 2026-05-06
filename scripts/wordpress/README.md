@@ -4,16 +4,18 @@ Este módulo permite crear borradores de noticias en WordPress desde mensajes en
 
 ## Estado actual
 
-Funciona:
+Funciona y está validado:
 
 - Telegram envía texto estructurado.
 - OpenClaw interpreta la noticia.
 - OpenClaw pide confirmación.
 - WordPress crea un borrador.
 - Se asigna categoría real si existe.
+- El flujo sin imagen está validado.
+- El flujo con imagen desde Telegram está validado.
 - No se publica directamente.
 
-Última prueba validada:
+Última prueba validada del flujo sin imagen:
 
 - Borrador ID: 204
 - Estado: draft
@@ -33,15 +35,10 @@ En alatina.cl, una noticia normalmente debe llevar fotografía.
 Estado actual:
 
 - El flujo procesa texto y categoría.
-- La fotografía todavía no está implementada.
-
-Objetivo siguiente:
-
-- Recibir una foto desde Telegram.
-- Subirla a WordPress Media.
-- Asignarla como imagen destacada del borrador.
-
-Si una noticia no trae fotografía, OpenClaw debe advertirlo antes de crear el borrador.
+- El flujo con fotografía está validado.
+- Si una noticia no trae fotografía, OpenClaw debe advertirlo antes de crear el borrador.
+- Todo debe quedar en estado borrador (`draft`).
+- Nunca se publica desde Telegram.
 
 ## Formato actual
 
@@ -65,6 +62,7 @@ FIN
 - descartar
 
 No ofrecer publicar desde Telegram.
+Nunca publicar desde Telegram.
 
 ## Scripts
 
@@ -81,9 +79,20 @@ Las credenciales están fuera de Git en:
 
 No imprimir, copiar ni subir ese archivo.
 
+## Convención de pruebas
+
+Usar este prefijo recomendado para pruebas controladas del flujo:
+
+`[PRUEBA OPENCLAW]`
+
+Ejemplos:
+
+- `[PRUEBA OPENCLAW] Noticia sin imagen desde Telegram`
+- `[PRUEBA OPENCLAW] Noticia con imagen desde Telegram`
+
 ## Próximas fases
 
-1. Fotografía desde Telegram como imagen destacada.
+1. Consolidar el baseline documental del flujo Telegram a WordPress.
 2. Eventos de calendario desde Telegram.
 3. Transparencia CGP: ingresos, egresos, boletas y saldos.
 4. Galería de fotos.
@@ -137,19 +146,11 @@ Esto permite que el tema la muestre:
 
 No se recomienda insertar la imagen principal manualmente dentro del texto, salvo que sea una segunda imagen o una galería.
 
-## Pendiente para Telegram con fotografía
+## Nota sobre Telegram con fotografía
 
-Todavía falta conectar la foto enviada directamente por Telegram.
+La conexión de fotografía enviada desde Telegram ya fue validada de extremo a extremo.
 
-La parte WordPress ya está lista.
-
-Pendiente técnico:
-
-1. Detectar imagen enviada por Telegram.
-2. Descargar imagen desde Telegram hacia Nitro.
-3. Pasar la ruta local al script integrador.
-4. Crear borrador con imagen destacada.
-5. Mantener confirmación previa antes de crear.
+La parte WordPress y la integración con imagen destacada ya están listas para este baseline.
 
 
 ## Telegram con fotografía real validado
