@@ -17,11 +17,23 @@ metadata: {"clawdbot":{"emoji":"📰","requires":{"bins":["bash","python3","curl
 
 # Alatina WordPress Publisher
 
-Skill para ayudar a Jean a crear borradores de noticias en alatina.cl desde mensajes estructurados.
+Crear borradores de noticias para alatina.cl desde mensajes estructurados tipo Telegram.
 
 ## Regla principal
 
 Nunca publicar directo. Solo crear borradores después de confirmación explícita.
+
+OpenClaw nunca debe aceptar como confirmación final:
+- crear borrador
+- confirmar borrador
+- generar borrador
+
+Si Jean responde cualquiera de esas frases, responder exactamente:
+
+"Confirmación incompleta. Debes elegir explícitamente:
+- crear borrador sin imagen
+- crear borrador con imagen
+- descartar"
 
 ## Formato esperado
 
@@ -45,25 +57,40 @@ Cuando Jean envíe un mensaje que comience con `NUEVA NOTICIA BORRADOR:`:
    - categoría sugerida
    - extracto
    - resumen
+   - si hay imagen adjunta o no
 3. Pedir confirmación.
-4. Solo ejecutar si Jean confirma con:
-   - crear borrador
-   - confirmar borrador
-   - generar borrador
-5. Ejecutar el script local.
-6. Informar ID, estado y título del borrador.
+4. Solo ejecutar si Jean confirma explícitamente una opción válida según el contexto.
+5. Si la respuesta final es `crear borrador`, `confirmar borrador` o `generar borrador`, no ejecutar nada y responder con el texto exacto de confirmación incompleta.
+6. Ejecutar solo wrappers oficiales de Telegram.
+7. Informar ID, estado y título del borrador.
 
-## Script principal
+## Flujo sin imagen
 
-Ruta:
+Opciones permitidas:
+- crear borrador sin imagen
+- editar titulo: ...
+- editar categoria: ...
+- editar extracto: ...
+- editar texto: ...
+- descartar
 
-/home/srv-openclaw/.openclaw/workspace/repos/alatina/scripts/wordpress/create-draft-from-stdin.sh
+Reglas:
+- Solo el comando exacto `crear borrador sin imagen` permite crear borrador.
+- Debe ejecutar: `scripts/wordpress/telegram-create-draft-no-media.sh`
+- No debe usar `create-draft.sh` directamente.
+- No debe usar `create-draft-from-stdin.sh` directamente.
+- No debe subir media.
+- Siempre status `draft`.
+- No ofrecer `crear borrador` simple.
+- No ofrecer `confirmar borrador`.
+- No ofrecer `generar borrador`.
+- Nunca ofrecer `publicar`.
 
-Uso:
+Ejecución exacta:
 
+```bash
 cd /home/srv-openclaw/.openclaw/workspace/repos/alatina
-
-cat <<'MSG' | scripts/wordpress/create-draft-from-stdin.sh
+cat <<'MSG' | scripts/wordpress/telegram-create-draft-no-media.sh
 NUEVA NOTICIA BORRADOR:
 Título: Ejemplo
 Categoría: Comunicados
@@ -74,30 +101,77 @@ Contenido de prueba.
 
 FIN
 MSG
+```
+
+## Flujo con imagen
+
+Opciones permitidas:
+- crear borrador con imagen
+- crear borrador sin imagen
+- cambiar foto
+- editar titulo: ...
+- editar categoria: ...
+- editar extracto: ...
+- editar texto: ...
+- descartar
+
+Reglas:
+- Solo el comando exacto `crear borrador con imagen` permite subir media y crear borrador con imagen destacada.
+- Debe ejecutar: `scripts/wordpress/telegram-create-draft-with-media.sh /ruta/imagen "Título" "Contenido" "Extracto" "Categoría"`
+- No debe usar `upload-media.sh` directamente desde la conversación.
+- No debe usar `create-draft-with-media.sh` directamente desde la conversación.
+- Siempre status `draft`.
+- `crear borrador` simple es inválido.
+- `confirmar borrador` es inválido.
+- `generar borrador` es inválido.
+- Nunca ofrecer `publicar`.
+
+Ejecución exacta con imagen:
+
+```bash
+cd /home/srv-openclaw/.openclaw/workspace/repos/alatina
+scripts/wordpress/telegram-create-draft-with-media.sh \
+  /ruta/local/imagen.jpg \
+  "Título de la noticia" \
+  "Contenido principal de la noticia." \
+  "Extracto breve." \
+  "Comunicados"
+```
+
+## Si hay imagen y Jean elige crear borrador sin imagen
+
+Reglas:
+- Ejecutar solo: `scripts/wordpress/telegram-create-draft-no-media.sh`
+- No subir media.
+- No usar `featured_media`.
+- Siempre status `draft`.
 
 ## Seguridad
 
 - No mostrar credenciales.
-- No leer ni imprimir ~/.openclaw/secrets/alatina-wp.env.
+- No leer ni imprimir `~/.openclaw/secrets/alatina-wp.env`.
 - No usar status publish.
 - No modificar PHP, CSS, JS ni plantillas desde Telegram.
 - No hacer commit, push ni deploy sin confirmación explícita.
 - Si falta título o texto, pedir corrección.
-- Si hay imagen adjunta, avisar que las fotos serán una fase posterior.
+- Si la noticia no trae fotografía, advertirlo antes de crear el borrador.
+- Si hay imagen adjunta, no subir media ni llamar `create-draft-with-media.sh` hasta recibir exactamente `crear borrador con imagen`.
+- Si Jean elige `crear borrador sin imagen`, crear el borrador por la ruta sin imagen y no subir la fotografía a WordPress Media.
+- Si la foto incluye estudiantes, apoderados, funcionarios o personas reconocibles, advertir que debe existir autorización antes de publicar.
+- Si la imagen contiene datos sensibles, documentos, RUT, teléfonos, direcciones u otra información privada, advertirlo y no recomendar publicación sin revisión.
 
-## Regla adicional de confirmación
+## Wrappers oficiales de Telegram
 
-En Telegram, nunca ofrecer la opción "publicar" para este flujo.
+Usar solo:
+- `scripts/wordpress/telegram-create-draft-no-media.sh`
+- `scripts/wordpress/telegram-create-draft-with-media.sh`
 
-Opciones permitidas:
-- crear borrador
-- editar titulo
-- editar categoria
-- editar extracto
-- editar texto
-- descartar
-
-Si Jean pide "publicar", responder que este flujo solo crea borradores y que la publicación final debe hacerse desde WordPress o mediante un flujo futuro separado con revisión adicional.
+OpenClaw no debe llamar directamente desde una confirmación de Telegram a:
+- `create-draft.sh`
+- `create-draft-from-stdin.sh`
+- `create-draft-from-telegram-message.sh`
+- `upload-media.sh`
+- `create-draft-with-media.sh`
 
 ## Flujo validado con fotografía
 
@@ -107,8 +181,7 @@ Flujo validado:
 
 1. Jean envía una fotografía al bot de Telegram.
 2. OpenClaw recibe e interpreta la imagen.
-3. OpenClaw guarda la imagen localmente en:
-   ~/.openclaw/media/inbound/
+3. OpenClaw guarda la imagen localmente en `~/.openclaw/media/inbound/`.
 4. El script local sube la imagen a WordPress Media.
 5. WordPress entrega un Media ID.
 6. El script crea un borrador de noticia.
@@ -118,122 +191,13 @@ Flujo validado:
 
 Script integrador validado:
 
-/home/srv-openclaw/.openclaw/workspace/repos/alatina/scripts/wordpress/create-draft-with-media.sh
-
-Uso técnico:
-
-cd /home/srv-openclaw/.openclaw/workspace/repos/alatina
-
-scripts/wordpress/create-draft-with-media.sh \
-  /ruta/local/imagen.jpg \
-  "Título de la noticia" \
-  "Contenido principal de la noticia." \
-  "Extracto breve." \
-  "Comunicados"
+`/home/srv-openclaw/.openclaw/workspace/repos/alatina/scripts/wordpress/create-draft-with-media.sh`
 
 Última prueba validada:
 
-- Archivo local:
-  /home/srv-openclaw/.openclaw/media/inbound/file_24---4e581d8d-12a7-4400-a6b5-8b3fcfb9ea6e.jpg
+- Archivo local: `/home/srv-openclaw/.openclaw/media/inbound/file_24---4e581d8d-12a7-4400-a6b5-8b3fcfb9ea6e.jpg`
 - Media ID: 211
 - Post ID: 212
 - Estado: draft
 - Categoría: Comunicados
 - Imagen destacada: Media ID 211
-
-## Regla para noticias con fotografía
-
-Cuando Jean envíe una foto con una noticia:
-
-1. Interpretar la foto y el texto.
-2. Mostrar lo entendido:
-   - título
-   - categoría
-   - extracto
-   - resumen del texto
-   - si hay foto recibida
-   - descripción breve de la foto
-3. Recordar que la foto principal se usará como imagen destacada.
-4. Pedir confirmación antes de crear cualquier borrador.
-5. Solo ejecutar si Jean confirma explícitamente una opción clara:
-   - crear borrador con imagen
-   - crear borrador sin imagen
-   - crear borrador, solo cuando no haya foto recibida
-6. Crear siempre en estado draft.
-7. Nunca ofrecer publicar.
-8. Si la foto incluye estudiantes, apoderados, funcionarios o personas reconocibles, advertir que debe existir autorización antes de publicar.
-9. Si la imagen contiene datos sensibles, documentos, RUT, teléfonos, direcciones u otra información privada, advertirlo y no recomendar publicación sin revisión.
-
-## Opciones permitidas para noticia con fotografía
-
-Cuando haya foto recibida, ofrecer:
-
-- crear borrador con imagen
-- crear borrador sin imagen
-- editar titulo: ...
-- editar categoria: ...
-- editar extracto: ...
-- editar texto: ...
-- cambiar foto
-- descartar
-
-Si Jean responde solo "crear borrador", no asumir. Preguntar:
-
-"¿Quieres crear el borrador con imagen o sin imagen?"
-
-Cuando no haya foto recibida, se puede usar:
-
-- crear borrador
-
-No ofrecer "publicar" desde Telegram.
-
-
-## Regla prioritaria final para opciones de noticias con foto
-
-Esta regla tiene prioridad sobre cualquier regla anterior.
-
-Si el mensaje de Telegram incluye una fotografía o imagen adjunta, OpenClaw NO debe ofrecer la opción simple:
-
-- crear borrador
-
-En noticias con foto, las únicas opciones permitidas son:
-
-- crear borrador con imagen
-- crear borrador sin imagen
-- editar titulo: ...
-- editar categoria: ...
-- editar extracto: ...
-- editar texto: ...
-- cambiar foto
-- descartar
-
-Si hay fotografía recibida y Jean escribe solamente "crear borrador", responder:
-
-"Recibí una fotografía. ¿Quieres crear el borrador con imagen o sin imagen?"
-
-No asumir la decisión.
-
-Si no hay fotografía recibida, entonces sí se permite la opción simple:
-
-- crear borrador
-
-Nunca ofrecer "publicar".
-Nunca publicar directamente desde Telegram.
-
-## Regla estricta de respuesta cuando hay imagen
-
-Cuando OpenClaw responda a una noticia que incluye imagen adjunta, la sección "Opciones siguientes" debe incluir exactamente estas opciones:
-
-- crear borrador con imagen
-- crear borrador sin imagen
-- editar titulo: ...
-- editar categoria: ...
-- editar extracto: ...
-- editar texto: ...
-- cambiar foto
-- descartar
-
-No omitir "crear borrador sin imagen".
-No omitir "cambiar foto".
-No incluir la opción simple "crear borrador" cuando haya imagen adjunta.
-No incluir "publicar".

@@ -52,14 +52,44 @@ Contenido principal de la noticia.
 
 FIN
 
-## Confirmaciones permitidas
+## Confirmaciones finales oficiales
+
+- crear borrador sin imagen
+- crear borrador con imagen
+- descartar
+
+## Confirmaciones prohibidas
 
 - crear borrador
+- confirmar borrador
+- generar borrador
+
+## Confirmaciones oficiales por contexto
+
+Sin imagen:
+- crear borrador sin imagen
 - editar titulo: ...
 - editar categoria: ...
 - editar extracto: ...
 - editar texto: ...
 - descartar
+
+Con imagen:
+- crear borrador con imagen
+- crear borrador sin imagen
+- cambiar foto
+- editar titulo: ...
+- editar categoria: ...
+- editar extracto: ...
+- editar texto: ...
+- descartar
+
+Si Jean responde una de las frases prohibidas, OpenClaw debe responder:
+
+"Confirmación incompleta. Debes elegir explícitamente:
+- crear borrador sin imagen
+- crear borrador con imagen
+- descartar"
 
 No ofrecer publicar desde Telegram.
 Nunca publicar desde Telegram.
@@ -70,6 +100,43 @@ Nunca publicar desde Telegram.
 - parse-telegram-news.py
 - create-draft-from-telegram-message.sh
 - create-draft-from-stdin.sh
+- create-draft-with-media.sh
+- telegram-create-draft-no-media.sh
+- telegram-create-draft-with-media.sh
+
+## Wrappers oficiales para Telegram
+
+- scripts/wordpress/telegram-create-draft-no-media.sh
+- scripts/wordpress/telegram-create-draft-with-media.sh
+
+Regla:
+OpenClaw no debe llamar directamente `create-draft.sh`, `create-draft-from-stdin.sh`, `create-draft-from-telegram-message.sh`, `upload-media.sh` ni `create-draft-with-media.sh` desde una confirmación de Telegram. Debe usar los wrappers.
+
+## Guardas de ejecución
+
+Para endurecer el flujo, los scripts de entrada exigen `ALATINA_WP_DRAFT_GUARD` explícito.
+
+Valores permitidos:
+- `telegram-sin-imagen`
+- `telegram-con-imagen`
+- `manual-ok`
+
+Flujo sin imagen:
+
+```bash
+cat mensaje.txt | scripts/wordpress/telegram-create-draft-no-media.sh
+```
+
+Flujo con imagen:
+
+```bash
+scripts/wordpress/telegram-create-draft-with-media.sh \
+  /ruta/imagen.jpg \
+  "Título" \
+  "Contenido" \
+  "Extracto" \
+  "Comunicados"
+```
 
 ## Credenciales
 
@@ -97,7 +164,6 @@ Ejemplos:
 3. Transparencia CGP: ingresos, egresos, boletas y saldos.
 4. Galería de fotos.
 5. Apoyo para redes sociales.
-
 
 ## Flujo con fotografía validado
 
@@ -127,12 +193,14 @@ scripts/wordpress/create-draft-with-media.sh
 
 Uso manual:
 
-scripts/wordpress/create-draft-with-media.sh \
+```bash
+ALATINA_WP_DRAFT_GUARD=telegram-con-imagen scripts/wordpress/create-draft-with-media.sh \
   /ruta/imagen.jpg \
   "Título de la noticia" \
   "Contenido principal de la noticia." \
   "Extracto breve." \
   "Comunicados"
+```
 
 ## Posición editorial de la fotografía
 
@@ -151,7 +219,6 @@ No se recomienda insertar la imagen principal manualmente dentro del texto, salv
 La conexión de fotografía enviada desde Telegram ya fue validada de extremo a extremo.
 
 La parte WordPress y la integración con imagen destacada ya están listas para este baseline.
-
 
 ## Telegram con fotografía real validado
 
@@ -183,12 +250,14 @@ Flujo validado:
 
 Comando validado:
 
-scripts/wordpress/create-draft-with-media.sh \
+```bash
+ALATINA_WP_DRAFT_GUARD=telegram-con-imagen scripts/wordpress/create-draft-with-media.sh \
   /home/srv-openclaw/.openclaw/media/inbound/file_24---4e581d8d-12a7-4400-a6b5-8b3fcfb9ea6e.jpg \
   "Prueba noticia usando foto recibida por Telegram" \
   "Contenido de prueba." \
   "Extracto de prueba." \
   "Comunicados"
+```
 
 ## Regla de seguridad para fotografías escolares
 
@@ -200,48 +269,3 @@ Antes de usar fotos reales en noticias escolares, revisar:
 - Que la noticia quede siempre como borrador para revisión antes de publicación.
 
 El flujo desde Telegram debe seguir creando solo borradores, no publicaciones directas.
-
-
-## Flujo oficial Telegram con foto y confirmación validado
-
-Ya se validó el flujo completo desde Telegram usando foto y texto estructurado en el mismo mensaje.
-
-Flujo validado:
-
-1. Jean envía una foto por Telegram con el formato `NUEVA NOTICIA BORRADOR:`.
-2. OpenClaw interpreta título, categoría, extracto y texto.
-3. OpenClaw detecta imagen adjunta.
-4. OpenClaw ofrece opciones seguras:
-   - crear borrador con imagen
-   - crear borrador sin imagen
-   - cambiar foto
-   - editar titulo
-   - editar categoria
-   - editar extracto
-   - editar texto
-   - descartar
-5. Jean confirma `crear borrador con imagen`.
-6. OpenClaw sube la imagen a WordPress Media.
-7. OpenClaw crea un post en estado `draft`.
-8. WordPress asigna categoría real `Comunicados`.
-9. WordPress asigna la imagen como `featured_media`.
-10. No se publica directamente.
-
-Última prueba final validada:
-
-- Post ID: 214
-- Estado: draft
-- Título: Prueba definitiva opciones foto
-- Categoría: Comunicados
-- Categoría WordPress: ID 14
-- Media ID: 213
-- Tipo MIME: image/jpeg
-- Imagen destacada: Media ID 213
-- URL imagen: https://alatina.cl/wp-content/uploads/2026/05/file_28-83d006e5-9cba-4737-9711-5b75e36a5a59.jpg
-
-Regla final:
-
-- Si hay foto, no usar la opción simple `crear borrador`.
-- Si hay foto, ofrecer `crear borrador con imagen` y `crear borrador sin imagen`.
-- Si no hay foto, se permite `crear borrador`.
-- Nunca ofrecer `publicar` desde Telegram.

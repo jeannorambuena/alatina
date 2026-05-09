@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [ "${ALATINA_WP_DRAFT_GUARD:-}" != "telegram-con-imagen" ]; then
+  echo "ERROR: este flujo requiere ALATINA_WP_DRAFT_GUARD=telegram-con-imagen" >&2
+  exit 42
+fi
+
 IMAGE_FILE="${1:-}"
 TITLE="${2:-}"
 CONTENT="${3:-}"

@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+case "${ALATINA_WP_DRAFT_GUARD:-}" in
+ telegram-sin-imagen|telegram-con-imagen|manual-ok)
+  ;;
+ *)
+  echo "ERROR: creación de borrador bloqueada. Falta ALATINA_WP_DRAFT_GUARD explícito." >&2
+  echo "Valores permitidos: telegram-sin-imagen, telegram-con-imagen, manual-ok" >&2
+  exit 42
+  ;;
+esac
+
 SECRET_FILE="${ALATINA_WP_SECRET_FILE:-$HOME/.openclaw/secrets/alatina-wp.env}"
 
 if [[ ! -f "$SECRET_FILE" ]]; then

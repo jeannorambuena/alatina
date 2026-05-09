@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [ "${ALATINA_WP_DRAFT_GUARD:-}" != "telegram-sin-imagen" ]; then
+  echo "ERROR: este flujo requiere ALATINA_WP_DRAFT_GUARD=telegram-sin-imagen" >&2
+  exit 42
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONNECTOR="$SCRIPT_DIR/create-draft-from-telegram-message.sh"
 
