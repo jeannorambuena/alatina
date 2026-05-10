@@ -115,6 +115,31 @@ def summarize_event(prefix: str, event: dict):
     print(f"Texto corto: {meta.get('_alatina_event_short_label', '')}")
 
 
+def verify_persisted_meta(event: dict, data: dict):
+    meta = event.get('meta') or {}
+    expected = {
+        '_asc_event_date': data['date'],
+        '_asc_all_day': '1' if data.get('all_day') else '',
+        '_asc_start_time': data['start_time'],
+        '_asc_end_time': data['end_time'],
+        '_alatina_event_short_label': data['short_label'],
+    }
+    missing_meta_block = not isinstance(meta, dict) or len(meta) == 0
+    mismatches = []
+    for key, expected_value in expected.items():
+        current_value = meta.get(key, '') if isinstance(meta, dict) else ''
+        if current_value != expected_value:
+            mismatches.append((key, expected_value, current_value))
+
+    if missing_meta_block or mismatches:
+        lines = ['ERROR: WordPress creó/actualizó el evento pero no persistió meta calendario.']
+        if missing_meta_block:
+            lines.append('Meta ausente en la respuesta REST del evento.')
+        for key, expected_value, current_value in mismatches:
+            lines.append(f'- {key}: esperado={expected_value!r} actual={current_value!r}')
+        fail('\n'.join(lines), 44)
+
+
 def main():
     if len(sys.argv) != 3 or sys.argv[1] not in {'create', 'update', 'delete'}:
         fail('Uso: calendar-rest.py [create|update|delete] payload.json')
@@ -150,10 +175,14 @@ def main():
 
     if action == 'create':
         created = request_json('POST', f'{base_url}{POST_ENDPOINT}', auth_header, payload)
-        summarize_event('CREATE', created)
+        reloaded = request_json('GET', f"{base_url}{POST_ENDPOINT}/{created['id']}?context=edit", auth_header)
+        verify_persisted_meta(reloaded, data)
+        summarize_event('CREATE', reloaded)
     else:
-        existing = request_json('GET', f"{base_url}{POST_ENDPOINT}/{data['id']}", auth_header)
+        existing = request_json('GET', f"{base_url}{POST_ENDPOINT}/{data['id']}?context=edit", auth_header)
         updated = request_json('POST', f"{base_url}{POST_ENDPOINT}/{data['id']}", auth_header, payload)
+        reloaded = request_json('GET', f"{base_url}{POST_ENDPOINT}/{updated['id']}?context=edit", auth_header)
+        verify_persisted_meta(reloaded, data)
         print('ANTES:')
         print(f"Título: {existing.get('title', {}).get('rendered', '')}")
         print(f"Estado: {existing.get('status')}")
@@ -163,7 +192,7 @@ def main():
         print(f"Fin: {existing.get('meta', {}).get('_asc_end_time', '')}")
         print(f"Texto corto: {existing.get('meta', {}).get('_alatina_event_short_label', '')}")
         print('DESPUÉS:')
-        summarize_event('UPDATE', updated)
+        summarize_event('UPDATE', reloaded)
 
 
 if __name__ == '__main__':

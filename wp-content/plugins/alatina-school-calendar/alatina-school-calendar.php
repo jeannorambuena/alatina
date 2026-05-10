@@ -39,10 +39,11 @@ function alatina_school_calendar_register_post_type(): void
         'show_in_admin_bar' => true,
         'menu_position'     => 25,
         'menu_icon'         => 'dashicons-calendar-alt',
-        'supports'          => array('title', 'editor'),
+        'supports'          => array('title', 'editor', 'custom-fields'),
         'has_archive'       => false,
         'rewrite'           => false,
         'show_in_rest'      => true,
+        'rest_base'         => 'alatina_event',
     );
 
     register_post_type('alatina_event', $args);
@@ -127,7 +128,8 @@ function alatina_school_calendar_mb_substr(string $value, int $start, int $lengt
 function alatina_school_calendar_normalize_short_label(string $value): string
 {
     $value = wp_strip_all_tags($value);
-    $value = str_replace(array("", "
+    $value = str_replace(array("
+", "
 ", "	"), ' ', $value);
     $value = preg_replace('/\s+/u', ' ', $value);
     $value = is_string($value) ? trim($value) : '';
@@ -155,17 +157,69 @@ function alatina_school_calendar_get_short_label(int $post_id, string $title = '
     return alatina_school_calendar_normalize_short_label($title);
 }
 
-function alatina_school_calendar_register_rest_meta(): void
+function alatina_school_calendar_sanitize_event_date($value): string
 {
-    register_post_meta('alatina_event', '_alatina_event_short_label', array(
+    $value = is_string($value) ? trim($value) : '';
+
+    if ($value === '') {
+        return '';
+    }
+
+    return preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) ? $value : '';
+}
+
+function alatina_school_calendar_sanitize_all_day($value): string
+{
+    if ($value === true || $value === 1 || $value === '1' || $value === 'true') {
+        return '1';
+    }
+
+    return '';
+}
+
+function alatina_school_calendar_sanitize_time_value($value): string
+{
+    $value = is_string($value) ? trim($value) : '';
+
+    if ($value === '') {
+        return '';
+    }
+
+    return preg_match('/^\d{2}:\d{2}$/', $value) ? $value : '';
+}
+
+function alatina_school_calendar_rest_meta_auth($allowed = null, $meta_key = '', $post_id = 0, $user_id = 0, $cap = '', $caps = array()): bool
+{
+    if ($post_id) {
+        return current_user_can('edit_post', (int) $post_id);
+    }
+
+    return current_user_can('edit_posts');
+}
+
+function alatina_school_calendar_register_single_meta(string $meta_key, callable $sanitize_callback): void
+{
+    register_post_meta('alatina_event', $meta_key, array(
         'single'            => true,
         'type'              => 'string',
-        'show_in_rest'      => true,
-        'sanitize_callback' => 'alatina_school_calendar_normalize_short_label',
-        'auth_callback'     => static function () {
-            return current_user_can('edit_posts');
-        },
+        'show_in_rest'      => array(
+            'schema' => array(
+                'type' => 'string',
+                'context' => array('view', 'edit'),
+            ),
+        ),
+        'sanitize_callback' => $sanitize_callback,
+        'auth_callback'     => 'alatina_school_calendar_rest_meta_auth',
     ));
+}
+
+function alatina_school_calendar_register_rest_meta(): void
+{
+    alatina_school_calendar_register_single_meta('_asc_event_date', 'alatina_school_calendar_sanitize_event_date');
+    alatina_school_calendar_register_single_meta('_asc_all_day', 'alatina_school_calendar_sanitize_all_day');
+    alatina_school_calendar_register_single_meta('_asc_start_time', 'alatina_school_calendar_sanitize_time_value');
+    alatina_school_calendar_register_single_meta('_asc_end_time', 'alatina_school_calendar_sanitize_time_value');
+    alatina_school_calendar_register_single_meta('_alatina_event_short_label', 'alatina_school_calendar_normalize_short_label');
 }
 add_action('init', 'alatina_school_calendar_register_rest_meta', 30);
 
