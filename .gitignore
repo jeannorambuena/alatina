@@ -75,7 +75,8 @@ Desktop.ini
 
 # 11) Ruido local temporal
 wp-content/themes/alatina-base/_restore-points/
-wp-content/plugins/alatina-school-calendar/
+wp-content/plugins/alatina-school-calendar/_restore-points/
+wp-content/plugins/alatina-school-calendar/tools/
 
 # 12) Python cache local
 __pycache__/
