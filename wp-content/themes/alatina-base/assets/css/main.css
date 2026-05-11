@@ -60,7 +60,14 @@ a:hover {
   display: none !important;
 }
 
+.site-header {
+  position: relative;
+  z-index: 1400;
+}
+
 .nav-shell {
+  position: relative;
+  z-index: 1405;
   background: rgba(255, 255, 255, .97);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--alatina-border);
@@ -170,6 +177,8 @@ a:hover {
 }
 
 .primary-nav-collapse {
+  position: relative;
+  z-index: 1406;
   margin-top: .8rem;
 }
 
@@ -230,6 +239,7 @@ a:hover {
 
 #primary-menu .sub-menu {
   list-style: none;
+  z-index: 1410;
   margin: .35rem 0 0;
   padding: .5rem;
   border-radius: 1rem;
@@ -377,7 +387,7 @@ a:hover {
 .home-enrollment-toast {
   position: fixed;
   inset: 0;
-  z-index: 1200;
+  z-index: 1190;
   display: flex;
   align-items: center !important;
   justify-content: center !important;
@@ -879,6 +889,7 @@ a:hover {
 
 .hero-shell--school {
   position: relative;
+  z-index: 1;
   overflow: hidden;
   background:
     radial-gradient(circle at 14% 18%, rgba(255, 255, 255, .12), transparent 20%),
@@ -899,10 +910,43 @@ a:hover {
 .news-card-v2,
 .timeline-card,
 .quicklink-card,
+.content-card--subject,
 .milestones-intro-card,
 .home-prefooter__card {
   border-radius: var(--alatina-radius);
   box-shadow: var(--alatina-shadow);
+}
+
+.quicklink-card--subject,
+.content-card--subject {
+  border: 1px solid rgba(21, 74, 130, .12);
+  background: linear-gradient(180deg, #ffffff, #f6f9fc);
+}
+
+.subject-preview-grid .quicklink-card--subject,
+.content-card--subject {
+  padding: 1.4rem 1.35rem;
+}
+
+.subject-card__eyebrow {
+  display: inline-flex;
+  margin-bottom: .7rem;
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--alatina-primary);
+}
+
+.subject-card__title {
+  margin-bottom: .75rem;
+  font-size: 1.2rem;
+}
+
+.subject-card__text {
+  margin-bottom: 0;
+  color: var(--alatina-muted);
+  line-height: 1.7;
 }
 
 .hero-surface {
@@ -2490,7 +2534,13 @@ a:hover {
 }
 
 @media (max-width: 1199px) {
+  body.primary-nav-open {
+    overflow: hidden;
+  }
+
   .primary-nav-collapse {
+    max-height: calc(100vh - 6.5rem);
+    overflow-y: auto;
     padding-top: .65rem;
   }
 
@@ -2742,6 +2792,7 @@ a:hover {
   .news-body,
   .timeline-card,
   .quicklink-card,
+  .content-card--subject,
   .milestones-intro-card,
   .home-prefooter__card,
   .page-hero__surface,

@@ -13,6 +13,8 @@ $school_calendar_page = get_page_by_path('calendario-escolar');
 $school_calendar_url = $school_calendar_page ? get_permalink($school_calendar_page) : home_url('/calendario-escolar/');
 $contact_page = get_page_by_path('contacto');
 $contact_url  = $contact_page ? get_permalink($contact_page) : home_url('/contacto/');
+$subjects_page = get_page_by_path('asignaturas');
+$subjects_url  = $subjects_page ? get_permalink($subjects_page) : home_url('/asignaturas/');
 
 $cgp_page = get_page_by_path('cgp');
 $cgp_url  = $cgp_page ? get_permalink($cgp_page) : home_url('/cgp/');
@@ -24,6 +26,19 @@ $cgp_highlight = array(
     'url'   => $cgp_url,
     'cta'   => __('Ver información del CGP', 'alatina-base'),
 );
+
+$milestones = array_map(static function ($milestone) {
+    $title = isset($milestone['title']) ? (string) $milestone['title'] : '';
+    $text  = isset($milestone['text']) ? (string) $milestone['text'] : '';
+    $combined = $title . ' ' . $text;
+
+    if (preg_match('/\[CONTENIDO TEMPORAL\]|Información en validación/i', $combined) || preg_match('/borrad|placehold|validar/i', $combined)) {
+        $milestone['title'] = __('[CONTENIDO TEMPORAL] Hito institucional en validación', 'alatina-base');
+        $milestone['text']  = __('Información en actualización: próximamente se incorporarán hitos oficiales entregados por la escuela para esta sección.', 'alatina-base');
+    }
+
+    return $milestone;
+}, $milestones);
 
 get_header();
 ?>
@@ -38,22 +53,22 @@ get_header();
       <a class="home-enrollment-toast__card" href="<?php echo esc_url($contact_url); ?>">
         <div class="home-enrollment-toast__grid">
           <div class="home-enrollment-toast__content">
-            <span class="home-enrollment-toast__eyebrow"><?php esc_html_e('Admisión 2026', 'alatina-base'); ?></span>
+            <span class="home-enrollment-toast__eyebrow"><?php esc_html_e('Información en validación', 'alatina-base'); ?></span>
             <h2>
-              <span class="home-enrollment-toast__title-main"><?php esc_html_e('Matrículas 2026', 'alatina-base'); ?></span>
-              <span class="home-enrollment-toast__title-accent"><?php esc_html_e('abiertas', 'alatina-base'); ?></span>
-              <span class="home-enrollment-toast__title-support"><?php esc_html_e('para todos los cursos', 'alatina-base'); ?></span>
+              <span class="home-enrollment-toast__title-main"><?php esc_html_e('Admisión y matrícula', 'alatina-base'); ?></span>
+              <span class="home-enrollment-toast__title-accent"><?php esc_html_e('2026', 'alatina-base'); ?></span>
+              <span class="home-enrollment-toast__title-support"><?php esc_html_e('contenido temporal sujeto a confirmación', 'alatina-base'); ?></span>
             </h2>
-            <p class="home-enrollment-toast__lead"><?php esc_html_e('Información de matrícula, horarios de atención y acompañamiento para familias desde Prekínder a 8° básico.', 'alatina-base'); ?></p>
+            <p class="home-enrollment-toast__lead"><?php esc_html_e('Este aviso funciona como apoyo visual mientras la escuela confirma vacantes, niveles disponibles, horarios de atención y requisitos oficiales de matrícula.', 'alatina-base'); ?></p>
 
             <div class="home-enrollment-toast__status-list" aria-hidden="true">
-              <span class="home-enrollment-toast__status home-enrollment-toast__status--available"><?php esc_html_e('Todos los cursos', 'alatina-base'); ?></span>
-              <span class="home-enrollment-toast__status home-enrollment-toast__status--warm"><?php esc_html_e('Horarios de atención', 'alatina-base'); ?></span>
-              <span class="home-enrollment-toast__status home-enrollment-toast__status--soft"><?php esc_html_e('Talleres activos', 'alatina-base'); ?></span>
-              <span class="home-enrollment-toast__status home-enrollment-toast__status--lilac"><?php esc_html_e('Orientación escolar', 'alatina-base'); ?></span>
+              <span class="home-enrollment-toast__status home-enrollment-toast__status--available"><?php esc_html_e('Contacto disponible', 'alatina-base'); ?></span>
+              <span class="home-enrollment-toast__status home-enrollment-toast__status--warm"><?php esc_html_e('Datos por validar', 'alatina-base'); ?></span>
+              <span class="home-enrollment-toast__status home-enrollment-toast__status--soft"><?php esc_html_e('Información institucional', 'alatina-base'); ?></span>
+              <span class="home-enrollment-toast__status home-enrollment-toast__status--lilac"><?php esc_html_e('Orientación para familias', 'alatina-base'); ?></span>
             </div>
 
-            <span class="home-enrollment-toast__cta"><?php esc_html_e('Solicitar información de matrícula', 'alatina-base'); ?></span>
+            <span class="home-enrollment-toast__cta"><?php esc_html_e('Revisar contacto y orientación', 'alatina-base'); ?></span>
           </div>
 
           <div class="home-enrollment-toast__visual" aria-hidden="true">
@@ -72,7 +87,7 @@ get_header();
               </div>
             </div>
             <span class="home-enrollment-toast__badge home-enrollment-toast__badge--sky"><?php esc_html_e('Información y contacto', 'alatina-base'); ?></span>
-            <span class="home-enrollment-toast__badge home-enrollment-toast__badge--gold"><?php esc_html_e('Vacantes 2026', 'alatina-base'); ?></span>
+            <span class="home-enrollment-toast__badge home-enrollment-toast__badge--gold"><?php esc_html_e('Contenido temporal', 'alatina-base'); ?></span>
           </div>
         </div>
       </a>
@@ -225,28 +240,38 @@ get_header();
                   </div>
                 </article>
                 <?php wp_reset_postdata(); ?>
+              <?php else : ?>
+                <article class="news-card-v2 news-card-v2--stacked news-card-v2--secondary news-card-v2--placeholder">
+                  <div class="news-thumb-placeholder"><span><?php esc_html_e('[CONTENIDO TEMPORAL]', 'alatina-base'); ?></span></div>
+                  <div class="news-body">
+                    <div class="news-date"><?php esc_html_e('Información en validación', 'alatina-base'); ?></div>
+                    <h3><?php esc_html_e('[CONTENIDO TEMPORAL] Comunicado institucional pendiente de reemplazo', 'alatina-base'); ?></h3>
+                    <p><?php esc_html_e('Este bloque mantiene activa la portada mientras la escuela entrega nuevas noticias, comunicados y actividades oficiales para publicación.', 'alatina-base'); ?></p>
+                    <a class="news-more" href="<?php echo esc_url(alatina_base_get_page_url('noticias')); ?>"><?php esc_html_e('Ir a noticias', 'alatina-base'); ?></a>
+                  </div>
+                </article>
               <?php endif; ?>
             <?php endfor; ?>
           </div>
         <?php else : ?>
           <article class="news-card-v2 news-card-v2--featured news-card-v2--lead news-card-v2--placeholder-main">
-            <div class="news-thumb-placeholder news-thumb-placeholder--lead"><span><?php esc_html_e('Portada de noticias', 'alatina-base'); ?></span></div>
+            <div class="news-thumb-placeholder news-thumb-placeholder--lead"><span><?php esc_html_e('[CONTENIDO TEMPORAL]', 'alatina-base'); ?></span></div>
             <div class="news-body news-body--lead">
-              <div class="news-date"><?php esc_html_e('Publicación principal', 'alatina-base'); ?></div>
-              <h3><?php esc_html_e('Espacio listo para destacar una noticia principal de la comunidad educativa', 'alatina-base'); ?></h3>
-              <p><?php esc_html_e('La portada ya no deja una tarjeta pequeña perdida: reserva un bloque principal amplio para la noticia más importante del momento.', 'alatina-base'); ?></p>
-              <span class="news-more"><?php esc_html_e('Leer noticia principal', 'alatina-base'); ?></span>
+              <div class="news-date"><?php esc_html_e('Información en validación', 'alatina-base'); ?></div>
+              <h3><?php esc_html_e('[CONTENIDO TEMPORAL] Comunicado institucional de portada', 'alatina-base'); ?></h3>
+              <p><?php esc_html_e('Este espacio se mantendrá activo mientras se reemplaza por noticias oficiales, actividades escolares y comunicados entregados por la escuela.', 'alatina-base'); ?></p>
+              <span class="news-more"><?php esc_html_e('Se actualizará con contenido oficial', 'alatina-base'); ?></span>
             </div>
           </article>
           <div class="news-stack">
             <?php for ($i = 1; $i <= 2; $i++) : ?>
               <article class="news-card-v2 news-card-v2--stacked news-card-v2--secondary news-card-v2--placeholder">
-                <div class="news-thumb-placeholder"><span><?php esc_html_e('Actualidad escolar', 'alatina-base'); ?></span></div>
+                <div class="news-thumb-placeholder"><span><?php esc_html_e('[CONTENIDO TEMPORAL]', 'alatina-base'); ?></span></div>
                 <div class="news-body">
-                  <div class="news-date"><?php esc_html_e('Próxima publicación', 'alatina-base'); ?></div>
-                  <h3><?php esc_html_e('Bloque secundario preparado para noticias, comunicados o actividades', 'alatina-base'); ?></h3>
-                  <p><?php esc_html_e('Cada tarjeta secundaria aporta densidad visual y deja la sección con una composición editorial más fuerte.', 'alatina-base'); ?></p>
-                  <span class="news-more"><?php esc_html_e('Ver más', 'alatina-base'); ?></span>
+                  <div class="news-date"><?php esc_html_e('Información en actualización', 'alatina-base'); ?></div>
+                  <h3><?php esc_html_e('[CONTENIDO TEMPORAL] Actividad escolar de ejemplo', 'alatina-base'); ?></h3>
+                  <p><?php esc_html_e('Este contenido temporal será reemplazado por información oficial entregada por la escuela para fortalecer la sección de noticias.', 'alatina-base'); ?></p>
+                  <span class="news-more"><?php esc_html_e('Pendiente de reemplazo oficial', 'alatina-base'); ?></span>
                 </div>
               </article>
             <?php endfor; ?>
@@ -283,6 +308,39 @@ get_header();
     </div>
   </section>
 
+  <section id="asignaturas" class="links-section links-section--subjects py-5">
+    <div class="container">
+      <div class="section-heading-row mb-4">
+        <span class="section-tag"><?php esc_html_e('Asignaturas', 'alatina-base'); ?></span>
+        <h2 class="section-title"><?php esc_html_e('Áreas de aprendizaje con base visual revisable', 'alatina-base'); ?></h2>
+        <p class="section-copy mb-0"><?php esc_html_e('[CONTENIDO TEMPORAL] Esta sección resume las asignaturas y áreas formativas mientras la escuela valida el contenido oficial para publicación.', 'alatina-base'); ?></p>
+      </div>
+      <div class="row g-4 subject-preview-grid">
+        <?php $subject_preview_cards = array(
+          array('slug' => 'lenguaje-y-comunicacion', 'title' => __('Lenguaje y Comunicación', 'alatina-base')),
+          array('slug' => 'matematica', 'title' => __('Matemática', 'alatina-base')),
+          array('slug' => 'ciencias-naturales', 'title' => __('Ciencias Naturales', 'alatina-base')),
+          array('slug' => 'historia-geografia-y-ciencias-sociales', 'title' => __('Historia, Geografía y Ciencias Sociales', 'alatina-base')),
+          array('slug' => 'ingles', 'title' => __('Inglés', 'alatina-base')),
+          array('slug' => 'educacion-fisica-y-salud', 'title' => __('Educación Física y Salud', 'alatina-base')),
+        ); ?>
+        <?php foreach ($subject_preview_cards as $subject_card) : ?>
+          <div class="col-md-6 col-xl-4">
+            <article id="<?php echo esc_attr($subject_card['slug']); ?>" class="quicklink-card quicklink-card--home quicklink-card--subject h-100">
+              <span class="quicklink-eyebrow"><?php esc_html_e('[CONTENIDO TEMPORAL]', 'alatina-base'); ?></span>
+              <h3><?php echo esc_html($subject_card['title']); ?></h3>
+              <p><?php esc_html_e('Información referencial en validación. Será reemplazada por el detalle oficial entregado por la escuela.', 'alatina-base'); ?></p>
+              <span class="quicklink-cta"><?php esc_html_e('Contenido temporal revisable', 'alatina-base'); ?></span>
+            </article>
+          </div>
+        <?php endforeach; ?>
+      </div>
+      <div class="mt-4">
+        <a class="btn btn-outline-primary rounded-pill px-4" href="<?php echo esc_url($subjects_url); ?>"><?php esc_html_e('Ir a la página de Asignaturas', 'alatina-base'); ?></a>
+      </div>
+    </div>
+  </section>
+
   <section id="enlaces-importantes" class="links-section py-5">
     <div class="container">
       <div class="section-heading-row mb-4">
@@ -314,7 +372,10 @@ get_header();
           <h2><?php esc_html_e('Una transición más sólida hacia el pie del sitio', 'alatina-base'); ?></h2>
           <p><?php esc_html_e('El cierre de la home conecta enlaces, actualidad y navegación institucional antes de llegar al footer, evitando un corte visual débil.', 'alatina-base'); ?></p>
         </div>
-        <a class="btn btn-light rounded-pill px-4" href="<?php echo alatina_base_get_theme_url('home_hero_primary_url'); ?>"><?php echo esc_html(alatina_base_get_theme_text('home_hero_primary_label')); ?></a>
+        <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+          <a class="btn btn-light rounded-pill px-4" href="<?php echo esc_url($subjects_url); ?>"><?php esc_html_e('Asignaturas', 'alatina-base'); ?></a>
+          <a class="btn btn-light rounded-pill px-4" href="<?php echo esc_url(alatina_base_get_page_url('contacto')); ?>"><?php esc_html_e('Contacto y orientación', 'alatina-base'); ?></a>
+        </div>
       </div>
     </div>
   </section>

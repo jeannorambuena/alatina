@@ -1,5 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
   var primaryMenu = document.getElementById('primary-menu');
+  var primaryNav = document.getElementById('primaryNav');
+
+  if (primaryNav && window.bootstrap && window.bootstrap.Collapse) {
+    primaryNav.addEventListener('show.bs.collapse', function () {
+      document.body.classList.add('primary-nav-open');
+    });
+
+    primaryNav.addEventListener('hide.bs.collapse', function () {
+      document.body.classList.remove('primary-nav-open');
+    });
+
+    primaryNav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (window.innerWidth < 1200) {
+          var collapseInstance = window.bootstrap.Collapse.getOrCreateInstance(primaryNav, { toggle: false });
+          collapseInstance.hide();
+        }
+      });
+    });
+  }
 
   if (primaryMenu) {
     var desktopMedia = window.matchMedia('(min-width: 1200px)');

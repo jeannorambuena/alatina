@@ -68,7 +68,7 @@ function alatina_base_get_navigation_items() {
         array('label' => __('Inicio', 'alatina-base'), 'slug' => ''),
         array('label' => __('Historia', 'alatina-base'), 'slug' => 'historia'),
         array('label' => __('Quienes somos', 'alatina-base'), 'url' => home_url('/#quienes-somos')),
-        array('label' => __('Asignaturas', 'alatina-base'), 'url' => home_url('/#asignaturas')),
+        array('label' => __('Asignaturas', 'alatina-base'), 'url' => alatina_base_get_page_url('asignaturas')),
         array('label' => __('Información escolar', 'alatina-base'), 'url' => home_url('/#informacion-escolar')),
         array('label' => __('Noticias', 'alatina-base'), 'slug' => 'noticias'),
         array('label' => __('CGP', 'alatina-base'), 'slug' => 'comunidad-educativa'),
@@ -114,20 +114,36 @@ function alatina_base_get_quick_access_items() {
             'cta'     => get_theme_mod('quicklink_2_cta', __('Ver avisos', 'alatina-base')),
         ),
         array(
-            'icon'    => 'people',
-            'eyebrow' => get_theme_mod('quicklink_3_eyebrow', __('Comunidad', 'alatina-base')),
-            'title'   => get_theme_mod('quicklink_3_title', __('Centro de padres y comunidad', 'alatina-base')),
-            'text'    => get_theme_mod('quicklink_3_text', __('Información útil para familias, estudiantes, docentes y asistentes sobre participación e integración en la comunidad educativa.', 'alatina-base')),
-            'url'     => get_theme_mod('quicklink_3_url', alatina_base_get_page_url('comunidad-educativa')),
-            'cta'     => get_theme_mod('quicklink_3_cta', __('Ir a comunidad', 'alatina-base')),
+            'icon'    => 'calendar-event',
+            'eyebrow' => __('Calendario', 'alatina-base'),
+            'title'   => __('Calendario escolar', 'alatina-base'),
+            'text'    => __('Actividades, reuniones y fechas relevantes para seguimiento de familias y comunidad educativa.', 'alatina-base'),
+            'url'     => alatina_base_get_page_url('calendario-escolar'),
+            'cta'     => __('Ver calendario', 'alatina-base'),
         ),
         array(
-            'icon'    => 'calendar-event',
-            'eyebrow' => get_theme_mod('quicklink_4_eyebrow', __('Agenda', 'alatina-base')),
-            'title'   => get_theme_mod('quicklink_4_title', __('Contacto y admisión', 'alatina-base')),
-            'text'    => get_theme_mod('quicklink_4_text', __('Canales de contacto, orientación y matrícula escolar para familias y apoderados.', 'alatina-base')),
-            'url'     => get_theme_mod('quicklink_4_url', alatina_base_get_page_url('contacto')),
-            'cta'     => get_theme_mod('quicklink_4_cta', __('Ver orientación', 'alatina-base')),
+            'icon'    => 'school',
+            'eyebrow' => __('Asignaturas', 'alatina-base'),
+            'title'   => __('Áreas de aprendizaje', 'alatina-base'),
+            'text'    => __('[CONTENIDO TEMPORAL] Sección de asignaturas, talleres y orientación pedagógica en validación.', 'alatina-base'),
+            'url'     => alatina_base_get_page_url('asignaturas'),
+            'cta'     => __('Ver asignaturas', 'alatina-base'),
+        ),
+        array(
+            'icon'    => 'people',
+            'eyebrow' => __('Comunidad', 'alatina-base'),
+            'title'   => __('Centro de padres y comunidad', 'alatina-base'),
+            'text'    => __('Información útil para familias, estudiantes, docentes y asistentes sobre participación e integración en la comunidad educativa.', 'alatina-base'),
+            'url'     => alatina_base_get_page_url('comunidad-educativa'),
+            'cta'     => __('Ir a comunidad', 'alatina-base'),
+        ),
+        array(
+            'icon'    => 'telephone',
+            'eyebrow' => __('Contacto', 'alatina-base'),
+            'title'   => __('Contacto y admisión', 'alatina-base'),
+            'text'    => __('Canales de contacto, orientación y matrícula escolar para familias y apoderados.', 'alatina-base'),
+            'url'     => alatina_base_get_page_url('contacto'),
+            'cta'     => __('Ver orientación', 'alatina-base'),
         ),
     );
 }
@@ -137,19 +153,19 @@ function alatina_base_get_highlight_documents() {
         array(
             'eyebrow' => get_theme_mod('document_1_eyebrow', __('Documento prioritario', 'alatina-base')),
             'title'   => get_theme_mod('document_1_title', __('Reglamento interno y convivencia', 'alatina-base')),
-            'text'    => get_theme_mod('document_1_text', __('PLACEHOLDER VALIDAR. Espacio reservado para reglamento vigente y versión descargable.', 'alatina-base')),
+            'text'    => get_theme_mod('document_1_text', __('Información en validación. Espacio reservado para reglamento vigente y versión descargable.', 'alatina-base')),
             'url'     => get_theme_mod('document_1_url', alatina_base_get_page_url('documentos')),
         ),
         array(
             'eyebrow' => get_theme_mod('document_2_eyebrow', __('Documento prioritario', 'alatina-base')),
             'title'   => get_theme_mod('document_2_title', __('Proyecto educativo institucional', 'alatina-base')),
-            'text'    => get_theme_mod('document_2_text', __('BORRADOR. Resumen ejecutivo y enlace al documento completo cuando esté validado.', 'alatina-base')),
+            'text'    => get_theme_mod('document_2_text', __('[CONTENIDO TEMPORAL] Resumen ejecutivo y enlace al documento completo cuando esté validado.', 'alatina-base')),
             'url'     => get_theme_mod('document_2_url', alatina_base_get_page_url('proyecto-educativo')),
         ),
         array(
             'eyebrow' => get_theme_mod('document_3_eyebrow', __('Documento prioritario', 'alatina-base')),
             'title'   => get_theme_mod('document_3_title', __('Protocolos, formularios y circulares', 'alatina-base')),
-            'text'    => get_theme_mod('document_3_text', __('PLACEHOLDER VALIDAR. Base lista para concentrar recursos oficiales por categoría.', 'alatina-base')),
+            'text'    => get_theme_mod('document_3_text', __('Información en validación. Base lista para concentrar recursos oficiales por categoría.', 'alatina-base')),
             'url'     => get_theme_mod('document_3_url', alatina_base_get_page_url('documentos')),
         ),
     );
@@ -168,19 +184,19 @@ function alatina_base_get_home_events() {
     return array(
         array(
             'date' => get_theme_mod('event_1_date', __('Próx. semana', 'alatina-base')),
-            'title' => get_theme_mod('event_1_title', __('BORRADOR. Reunión informativa para familias', 'alatina-base')),
+            'title' => get_theme_mod('event_1_title', __('[CONTENIDO TEMPORAL] Reunión informativa para familias', 'alatina-base')),
             'text' => get_theme_mod('event_1_text', __('Espacio pensado para publicar actividades cercanas, avisos urgentes o hitos del calendario escolar.', 'alatina-base')),
             'url' => get_theme_mod('event_1_url', alatina_base_get_page_url('noticias')),
         ),
         array(
             'date' => get_theme_mod('event_2_date', __('Próximo evento', 'alatina-base')),
-            'title' => get_theme_mod('event_2_title', __('PLACEHOLDER VALIDAR. Jornada de convivencia y participación', 'alatina-base')),
+            'title' => get_theme_mod('event_2_title', __('Información en validación. Jornada de convivencia y participación', 'alatina-base')),
             'text' => get_theme_mod('event_2_text', __('Bloque rotativo para actividades institucionales, celebraciones o comunicados destacados.', 'alatina-base')),
             'url' => get_theme_mod('event_2_url', alatina_base_get_page_url('noticias')),
         ),
         array(
             'date' => get_theme_mod('event_3_date', __('Aviso relevante', 'alatina-base')),
-            'title' => get_theme_mod('event_3_title', __('BORRADOR. Actualización de calendario y trámites', 'alatina-base')),
+            'title' => get_theme_mod('event_3_title', __('[CONTENIDO TEMPORAL] Actualización de calendario y trámites', 'alatina-base')),
             'text' => get_theme_mod('event_3_text', __('Sección preparada para mostrar lo más urgente de forma visible bajo el menú principal.', 'alatina-base')),
             'url' => get_theme_mod('event_3_url', alatina_base_get_page_url('contacto')),
         ),
@@ -191,17 +207,17 @@ function alatina_base_get_home_milestones() {
     return array(
         array(
             'year' => get_theme_mod('milestone_1_year', '2025'),
-            'title' => get_theme_mod('milestone_1_title', __('BORRADOR. Actividad institucional destacada', 'alatina-base')),
+            'title' => get_theme_mod('milestone_1_title', __('[CONTENIDO TEMPORAL] Actividad institucional destacada', 'alatina-base')),
             'text' => get_theme_mod('milestone_1_text', __('Espacio para registrar logros, aniversarios, reconocimientos o avances relevantes del establecimiento.', 'alatina-base')),
         ),
         array(
             'year' => get_theme_mod('milestone_2_year', '2024'),
-            'title' => get_theme_mod('milestone_2_title', __('PLACEHOLDER VALIDAR. Reconocimiento o mejora relevante', 'alatina-base')),
+            'title' => get_theme_mod('milestone_2_title', __('Información en validación. Reconocimiento o mejora relevante', 'alatina-base')),
             'text' => get_theme_mod('milestone_2_text', __('Puede mostrar hitos académicos, comunitarios o de infraestructura en una narrativa visual de portada.', 'alatina-base')),
         ),
         array(
             'year' => get_theme_mod('milestone_3_year', '2023'),
-            'title' => get_theme_mod('milestone_3_title', __('BORRADOR. Proyecto o aniversario institucional', 'alatina-base')),
+            'title' => get_theme_mod('milestone_3_title', __('[CONTENIDO TEMPORAL] Proyecto o aniversario institucional', 'alatina-base')),
             'text' => get_theme_mod('milestone_3_text', __('La sección está pensada como bloque editorial fuerte y no como simple listado plano.', 'alatina-base')),
         ),
     );
@@ -242,22 +258,22 @@ function alatina_base_get_page_models() {
     return array(
         'historia' => array(
             'eyebrow' => __('Historia institucional', 'alatina-base'),
-            'lead'    => __('BORRADOR. Página modelo para narrar origen, hitos y evolución del establecimiento con enfoque territorial y comunitario.', 'alatina-base'),
+            'lead'    => __('[CONTENIDO TEMPORAL] Página modelo para narrar origen, hitos y evolución del establecimiento con enfoque territorial y comunitario.', 'alatina-base'),
             'summary' => __('Estructura lista para consolidar cronología, identidad escolar y testimonios institucionales.', 'alatina-base'),
             'sections' => array(
-                array('title' => __('Origen del establecimiento', 'alatina-base'),'content' => array(__('BORRADOR. Este bloque debe contar cuándo surge la escuela, qué necesidad educativa vino a cubrir y cómo se relaciona con su comunidad local.', 'alatina-base'),__('PLACEHOLDER VALIDAR. Se recomienda incorporar fecha de fundación, contexto territorial y primeras etapas de desarrollo.', 'alatina-base'))),
-                array('title' => __('Línea de tiempo institucional', 'alatina-base'),'list' => array(__('Hito 1 — Fundación y apertura inicial del establecimiento. BORRADOR.', 'alatina-base'),__('Hito 2 — Crecimiento de matrícula, niveles o infraestructura. PLACEHOLDER VALIDAR.', 'alatina-base'),__('Hito 3 — Consolidación de sellos formativos, proyectos o reconocimientos. BORRADOR.', 'alatina-base'))),
+                array('title' => __('Origen del establecimiento', 'alatina-base'),'content' => array(__('[CONTENIDO TEMPORAL] Este bloque debe contar cuándo surge la escuela, qué necesidad educativa vino a cubrir y cómo se relaciona con su comunidad local.', 'alatina-base'),__('Información en validación. Se recomienda incorporar fecha de fundación, contexto territorial y primeras etapas de desarrollo.', 'alatina-base'))),
+                array('title' => __('Línea de tiempo institucional', 'alatina-base'),'list' => array(__('Hito 1 — Fundación y apertura inicial del establecimiento. [CONTENIDO TEMPORAL]', 'alatina-base'),__('Hito 2 — Crecimiento de matrícula, niveles o infraestructura. Información en validación.', 'alatina-base'),__('Hito 3 — Consolidación de sellos formativos, proyectos o reconocimientos. [CONTENIDO TEMPORAL]', 'alatina-base'))),
                 array('title' => __('Patrimonio e identidad', 'alatina-base'),'content' => array(__('Espacio preparado para símbolos, tradiciones, actividades emblemáticas y vínculo con exalumnos, familias y territorio.', 'alatina-base'))),
             ),
             'highlights' => array(__('Línea de tiempo editable', 'alatina-base'),__('Bloque para fotos históricas futuras', 'alatina-base'),__('Base para hitos institucionales verificables', 'alatina-base')),
         ),
         'proyecto-educativo' => array(
             'eyebrow' => __('Proyecto educativo', 'alatina-base'),
-            'lead'    => __('BORRADOR. Página modelo para explicar misión, visión, sellos y estrategia formativa del establecimiento.', 'alatina-base'),
+            'lead'    => __('[CONTENIDO TEMPORAL] Página modelo para explicar misión, visión, sellos y estrategia formativa del establecimiento.', 'alatina-base'),
             'summary' => __('Plantilla pensada para traducir el PEI a una lectura web clara y navegable.', 'alatina-base'),
             'sections' => array(
-                array('title' => __('Misión y visión', 'alatina-base'),'content' => array(__('PLACEHOLDER VALIDAR. Aquí debe ir la misión oficial del establecimiento en una versión corta y comprensible.', 'alatina-base'),__('PLACEHOLDER VALIDAR. Aquí debe ir la visión institucional y la proyección educativa de mediano plazo.', 'alatina-base'))),
-                array('title' => __('Sellos formativos', 'alatina-base'),'list' => array(__('Formación integral con foco en convivencia y desarrollo personal. BORRADOR.', 'alatina-base'),__('Compromiso con aprendizaje significativo, lectura y habilidades socioemocionales. BORRADOR.', 'alatina-base'),__('Vinculación con familias y territorio como parte del proceso formativo. PLACEHOLDER VALIDAR.', 'alatina-base'))),
+                array('title' => __('Misión y visión', 'alatina-base'),'content' => array(__('Información en validación. Aquí debe ir la misión oficial del establecimiento en una versión corta y comprensible.', 'alatina-base'),__('Información en validación. Aquí debe ir la visión institucional y la proyección educativa de mediano plazo.', 'alatina-base'))),
+                array('title' => __('Sellos formativos', 'alatina-base'),'list' => array(__('Formación integral con foco en convivencia y desarrollo personal. [CONTENIDO TEMPORAL]', 'alatina-base'),__('Compromiso con aprendizaje significativo, lectura y habilidades socioemocionales. [CONTENIDO TEMPORAL]', 'alatina-base'),__('Vinculación con familias y territorio como parte del proceso formativo. Información en validación.', 'alatina-base'))),
                 array('title' => __('Prioridades de implementación', 'alatina-base'),'content' => array(__('Base preparada para mostrar objetivos anuales, acciones institucionales y evidencias de seguimiento.', 'alatina-base'))),
             ),
             'highlights' => array(__('Resumen ejecutivo del PEI', 'alatina-base'),__('Bloques para sellos y prioridades', 'alatina-base'),__('Espacio para descarga del documento oficial', 'alatina-base')),
@@ -268,7 +284,7 @@ function alatina_base_get_page_models() {
             'summary' => __('Funciona tanto con entradas reales de WordPress como con una estructura clara cuando aún no existan publicaciones.', 'alatina-base'),
             'sections' => array(
                 array('title' => __('Qué se publica aquí', 'alatina-base'),'list' => array(__('Comunicados oficiales a familias y estudiantes.', 'alatina-base'),__('Actividades institucionales, efemérides y agenda pública.', 'alatina-base'),__('Recordatorios académicos, administrativos o comunitarios.', 'alatina-base'))),
-                array('title' => __('Criterio editorial sugerido', 'alatina-base'),'content' => array(__('BORRADOR. Cada aviso debería indicar fecha, responsable, público objetivo y acción esperada para evitar ambigüedad.', 'alatina-base'))),
+                array('title' => __('Criterio editorial sugerido', 'alatina-base'),'content' => array(__('[CONTENIDO TEMPORAL] Cada aviso debería indicar fecha, responsable, público objetivo y acción esperada para evitar ambigüedad.', 'alatina-base'))),
             ),
             'highlights' => array(__('Listado dinámico de entradas recientes', 'alatina-base'),__('Tarjetas reutilizables para avisos', 'alatina-base'),__('Base para categorías futuras', 'alatina-base')),
         ),
@@ -278,7 +294,7 @@ function alatina_base_get_page_models() {
             'summary' => __('La estructura prioriza orden, jerarquía y futura escalabilidad por categorías.', 'alatina-base'),
             'sections' => array(
                 array('title' => __('Categorías sugeridas', 'alatina-base'),'list' => array(__('Reglamentos y normativa escolar.', 'alatina-base'),__('Protocolos de actuación y convivencia.', 'alatina-base'),__('Circulares, formularios y autorizaciones.', 'alatina-base'),__('Documentos pedagógicos o administrativos de consulta frecuente.', 'alatina-base'))),
-                array('title' => __('Criterio de publicación', 'alatina-base'),'content' => array(__('PLACEHOLDER VALIDAR. Cada documento debería indicar fecha de vigencia, versión y responsable de actualización.', 'alatina-base'))),
+                array('title' => __('Criterio de publicación', 'alatina-base'),'content' => array(__('Información en validación. Cada documento debería indicar fecha de vigencia, versión y responsable de actualización.', 'alatina-base'))),
             ),
             'highlights' => array(__('Base para listado por categorías', 'alatina-base'),__('Espacio para fecha de vigencia', 'alatina-base'),__('Mensajes de validación claros', 'alatina-base')),
         ),
@@ -309,10 +325,20 @@ function alatina_base_get_page_models() {
             'summary' => __('Combina contacto básico con una guía provisional de matrícula o postulación.', 'alatina-base'),
             'sections' => array(
                 array('title' => __('Canales de atención', 'alatina-base'),'list' => alatina_base_get_contact_placeholders()),
-                array('title' => __('Admisión y orientación', 'alatina-base'),'list' => alatina_base_get_theme_lines('admission_steps', array(__('Revisar proyecto educativo y sellos institucionales.', 'alatina-base'),__('Confirmar niveles disponibles y vacantes del periodo actual. PLACEHOLDER VALIDAR.', 'alatina-base'),__('Solicitar orientación o entrevista por canales oficiales.', 'alatina-base'),__('Presentar documentación requerida según instructivo definitivo.', 'alatina-base')))),
-                array('title' => __('Ubicación y referencia', 'alatina-base'),'content' => array(__('PLACEHOLDER VALIDAR. Incluir referencia del barrio, acceso de locomoción y observaciones para visitas presenciales.', 'alatina-base'))),
+                array('title' => __('Admisión y orientación', 'alatina-base'),'list' => alatina_base_get_theme_lines('admission_steps', array(__('Revisar proyecto educativo y sellos institucionales.', 'alatina-base'),__('Confirmar niveles disponibles y vacantes del periodo actual. Información en validación.', 'alatina-base'),__('Solicitar orientación o entrevista por canales oficiales.', 'alatina-base'),__('Presentar documentación requerida según instructivo definitivo.', 'alatina-base')))),
+                array('title' => __('Ubicación y referencia', 'alatina-base'),'content' => array(__('Información en validación. Incluir referencia del barrio, acceso de locomoción y observaciones para visitas presenciales.', 'alatina-base'))),
             ),
             'highlights' => array(__('Página híbrida de contacto y admisión', 'alatina-base'),__('Canales básicos visibles desde portada y footer', 'alatina-base'),__('Ruta de orientación para consultas frecuentes', 'alatina-base')),
+        ),
+        'asignaturas' => array(
+            'eyebrow' => __('Asignaturas', 'alatina-base'),
+            'lead'    => __('[CONTENIDO TEMPORAL] Esta sección será actualizada con información oficial sobre asignaturas, talleres y áreas de aprendizaje de la Escuela América Latina.', 'alatina-base'),
+            'summary' => __('Presentación base para áreas de aprendizaje y actividades formativas, pendiente de validación oficial por la escuela.', 'alatina-base'),
+            'sections' => array(
+                array('title' => __('Presentación general', 'alatina-base'),'content' => array(__('[CONTENIDO TEMPORAL] Esta sección organiza de forma visual las asignaturas y áreas de aprendizaje mientras la escuela valida el contenido oficial para publicación.', 'alatina-base'),__('Información en validación. No se informan planes, cargas horarias, docentes ni niveles específicos hasta recibir confirmación institucional.', 'alatina-base'))),
+                array('title' => __('Áreas consideradas en esta versión', 'alatina-base'),'list' => array(__('Lenguaje y Comunicación', 'alatina-base'),__('Matemática', 'alatina-base'),__('Ciencias Naturales', 'alatina-base'),__('Historia, Geografía y Ciencias Sociales', 'alatina-base'),__('Inglés', 'alatina-base'),__('Educación Física y Salud', 'alatina-base'),__('Artes Visuales y Música', 'alatina-base'),__('Tecnología', 'alatina-base'),__('Orientación y Convivencia Escolar', 'alatina-base'))),
+            ),
+            'highlights' => array(__('[CONTENIDO TEMPORAL] Base visual para asignaturas', 'alatina-base'),__('Sin horarios ni docentes inventados', 'alatina-base'),__('Lista preparada para reemplazo por información oficial', 'alatina-base')),
         ),
         'calendario-escolar' => array(
             'eyebrow' => __('Planificación institucional', 'alatina-base'),

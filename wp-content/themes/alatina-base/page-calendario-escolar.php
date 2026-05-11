@@ -21,6 +21,8 @@ get_header();
               <section class="model-section model-section--calendar-note">
                 <h2><?php esc_html_e('Información general', 'alatina-base'); ?></h2>
                 <p><?php esc_html_e('Aquí se publicarán actividades institucionales, reuniones, evaluaciones y fechas relevantes para estudiantes, familias y apoderados.', 'alatina-base'); ?></p>
+                <p><?php esc_html_e('Información en actualización: el calendario visual se refresca periódicamente con nuevas actividades cuando la escuela o el sistema de publicación incorporan eventos válidos.', 'alatina-base'); ?></p>
+                <p><?php esc_html_e('Si todavía no aparecen actividades en el mes actual, la estructura seguirá visible para revisión local sin modificar el plugin del calendario.', 'alatina-base'); ?></p>
 
                 <div class="page-sidecard__links">
                   <a class="text-link" href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Volver a portada', 'alatina-base'); ?></a>

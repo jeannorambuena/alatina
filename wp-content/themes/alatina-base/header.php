@@ -47,17 +47,17 @@ $current_slug = is_page() ? get_post_field('post_name', get_queried_object_id())
             <li class="menu-item nav-item <?php echo (is_front_page() || is_home()) ? 'current-menu-item' : ''; ?>"><a class="nav-link" href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Inicio', 'alatina-base'); ?></a></li>
             <li class="menu-item nav-item <?php echo 'quienes-somos' === $current_slug ? 'current-menu-item' : ''; ?>"><a class="nav-link" href="<?php echo esc_url(alatina_base_get_page_url('quienes-somos')); ?>"><?php esc_html_e('Quienes somos', 'alatina-base'); ?></a></li>
             <li class="menu-item nav-item menu-item-has-children menu-item--subjects <?php echo 'asignaturas' === $current_slug ? 'current-menu-item' : ''; ?>">
-              <a class="nav-link" href="<?php echo esc_url(home_url('/#asignaturas')); ?>"><?php esc_html_e('Asignaturas', 'alatina-base'); ?></a>
+              <a class="nav-link" href="<?php echo esc_url(alatina_base_get_page_url('asignaturas')); ?>"><?php esc_html_e('Asignaturas', 'alatina-base'); ?></a>
               <button class="menu-dropdown-toggle" type="button" aria-label="<?php esc_attr_e('Abrir menú de Asignaturas', 'alatina-base'); ?>"></button>
               <ul class="sub-menu">
-                <li class="menu-item"><a href="<?php echo esc_url(home_url('/#asignaturas')); ?>"><?php esc_html_e('Lenguaje', 'alatina-base'); ?></a></li>
-                <li class="menu-item"><a href="<?php echo esc_url(home_url('/#asignaturas')); ?>"><?php esc_html_e('Matemática', 'alatina-base'); ?></a></li>
-                <li class="menu-item"><a href="<?php echo esc_url(home_url('/#asignaturas')); ?>"><?php esc_html_e('Ciencias', 'alatina-base'); ?></a></li>
-                <li class="menu-item"><a href="<?php echo esc_url(home_url('/#asignaturas')); ?>"><?php esc_html_e('Historia', 'alatina-base'); ?></a></li>
-                <li class="menu-item"><a href="<?php echo esc_url(home_url('/#asignaturas')); ?>"><?php esc_html_e('Educación Física', 'alatina-base'); ?></a></li>
-                <li class="menu-item"><a href="<?php echo esc_url(home_url('/#asignaturas')); ?>"><?php esc_html_e('Artes', 'alatina-base'); ?></a></li>
-                <li class="menu-item"><a href="<?php echo esc_url(home_url('/#asignaturas')); ?>"><?php esc_html_e('Tecnología', 'alatina-base'); ?></a></li>
-                <li class="menu-item menu-item--meta"><span><?php esc_html_e('Profesor encargado · referencia visual', 'alatina-base'); ?></span></li>
+                <li class="menu-item"><a href="<?php echo esc_url(alatina_base_get_page_url('asignaturas')); ?>#lenguaje-y-comunicacion"><?php esc_html_e('Lenguaje', 'alatina-base'); ?></a></li>
+                <li class="menu-item"><a href="<?php echo esc_url(alatina_base_get_page_url('asignaturas')); ?>#matematica"><?php esc_html_e('Matemática', 'alatina-base'); ?></a></li>
+                <li class="menu-item"><a href="<?php echo esc_url(alatina_base_get_page_url('asignaturas')); ?>#ciencias-naturales"><?php esc_html_e('Ciencias', 'alatina-base'); ?></a></li>
+                <li class="menu-item"><a href="<?php echo esc_url(alatina_base_get_page_url('asignaturas')); ?>#historia-geografia-y-ciencias-sociales"><?php esc_html_e('Historia', 'alatina-base'); ?></a></li>
+                <li class="menu-item"><a href="<?php echo esc_url(alatina_base_get_page_url('asignaturas')); ?>#educacion-fisica-y-salud"><?php esc_html_e('Educación Física', 'alatina-base'); ?></a></li>
+                <li class="menu-item"><a href="<?php echo esc_url(alatina_base_get_page_url('asignaturas')); ?>#artes-visuales-y-musica"><?php esc_html_e('Artes', 'alatina-base'); ?></a></li>
+                <li class="menu-item"><a href="<?php echo esc_url(alatina_base_get_page_url('asignaturas')); ?>#tecnologia"><?php esc_html_e('Tecnología', 'alatina-base'); ?></a></li>
+                <li class="menu-item menu-item--meta"><span><?php esc_html_e('[CONTENIDO TEMPORAL] Información curricular en validación', 'alatina-base'); ?></span></li>
               </ul>
             </li>
             <li class="menu-item nav-item menu-item-has-children menu-item--info <?php echo in_array($current_slug, array('informacion-escolar', 'mision-vision', 'proyecto-educativo', 'reglamento-interno', 'mapa-ubicacion', 'documentos'), true) ? 'current-menu-item current-menu-ancestor' : ''; ?>">

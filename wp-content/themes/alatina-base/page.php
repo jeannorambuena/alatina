@@ -230,7 +230,10 @@ get_header();
                                 </div>
                             <?php else : ?>
                                 <div class="institutional-page__placeholder">
-                                    <h2 class="h3 mb-2"><?php esc_html_e('Próximamente', 'alatina-base'); ?></h2>
+                                    <h2 class="h3 mb-2"><?php esc_html_e('Información en actualización', 'alatina-base'); ?></h2>
+                                    <p class="mb-2 text-muted">
+                                        <?php esc_html_e('Esta sección está activa y preparada para recibir información oficial entregada por la escuela. Mientras tanto, se mantiene este bloque como referencia temporal.', 'alatina-base'); ?>
+                                    </p>
                                     <p class="mb-2 text-muted">
                                         <?php echo esc_html($summary); ?>
                                     </p>

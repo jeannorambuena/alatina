@@ -16,20 +16,27 @@ function alatina_base_setup() {
 add_action('after_setup_theme', 'alatina_base_setup');
 
 function alatina_base_assets() {
-    $theme   = wp_get_theme();
-    $version = $theme->get('Version');
+    $theme           = wp_get_theme();
+    $theme_version   = $theme->get('Version');
+    $stylesheet_path = get_stylesheet_directory() . '/style.css';
+    $main_css_path   = get_template_directory() . '/assets/css/main.css';
+    $main_js_path    = get_template_directory() . '/assets/js/main.js';
+
+    $style_version = file_exists($stylesheet_path) ? (string) filemtime($stylesheet_path) : $theme_version;
+    $main_css_version = file_exists($main_css_path) ? (string) filemtime($main_css_path) : $theme_version;
+    $main_js_version  = file_exists($main_js_path) ? (string) filemtime($main_js_path) : $theme_version;
 
     wp_enqueue_style('alatina-base-bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css', array(), '5.3.3');
-    wp_enqueue_style('alatina-base-style', get_stylesheet_uri(), array(), $version);
+    wp_enqueue_style('alatina-base-style', get_stylesheet_uri(), array(), $style_version);
     wp_enqueue_style(
         'alatina-base-main',
         get_template_directory_uri() . '/assets/css/main.css',
         array('alatina-base-bootstrap', 'alatina-base-style'),
-        $version
+        $main_css_version
     );
 
     wp_enqueue_script('alatina-base-bootstrap', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', array(), '5.3.3', true);
-    wp_enqueue_script('alatina-base-main', get_template_directory_uri() . '/assets/js/main.js', array('alatina-base-bootstrap'), $version, true);
+    wp_enqueue_script('alatina-base-main', get_template_directory_uri() . '/assets/js/main.js', array('alatina-base-bootstrap'), $main_js_version, true);
 }
 add_action('wp_enqueue_scripts', 'alatina_base_assets');
 
@@ -189,6 +196,7 @@ function alatina_base_register_theme_customizer($wp_customize) {
         'home_hero_secondary_url'=> array('section' => 'alatina_home_hero', 'label' => __('Hero · Botón secundario URL', 'alatina-base')),
         'home_news_action_url'   => array('section' => 'alatina_home_news', 'label' => __('Noticias · Botón URL', 'alatina-base')),
         'footer_cta_url'         => array('section' => 'alatina_footer', 'label' => __('Footer · Botón URL', 'alatina-base')),
+        'rrss_facebook_url'      => array('section' => 'alatina_branding', 'label' => __('RRSS · Facebook URL oficial', 'alatina-base')),
         'rrss_youtube_url'       => array('section' => 'alatina_branding', 'label' => __('RRSS · YouTube URL oficial', 'alatina-base')),
         'rrss_instagram_url'     => array('section' => 'alatina_branding', 'label' => __('RRSS · Instagram URL oficial', 'alatina-base')),
     );
@@ -381,6 +389,7 @@ function alatina_base_get_required_pages() {
         'mapa-ubicacion'      => array('title' => __('Mapa o ubicación', 'alatina-base')),
         'noticias'            => array('title' => __('Noticias y avisos', 'alatina-base')),
         'documentos'          => array('title' => __('Documentos importantes', 'alatina-base')),
+        'asignaturas'         => array('title' => __('Asignaturas', 'alatina-base')),
         'comunidad-educativa' => array('title' => __('Comunidad educativa', 'alatina-base')),
         'cgp'                 => array('title' => __('CGP', 'alatina-base')),
         'cgp-directiva'       => array('title' => __('Directiva', 'alatina-base')),
@@ -672,8 +681,9 @@ add_action('init', 'alatina_base_fix_gallery_slug', 35);
 
 function alatina_base_get_rrss_url($network) {
     $defaults = array(
-        'youtube'   => '#',
-        'instagram' => '#',
+        'facebook'  => 'https://www.facebook.com/',
+        'youtube'   => 'https://www.youtube.com/',
+        'instagram' => 'https://www.instagram.com/',
     );
 
     $key = 'rrss_' . sanitize_key($network) . '_url';
@@ -681,6 +691,56 @@ function alatina_base_get_rrss_url($network) {
 
     return esc_url(get_theme_mod($key, $fallback));
 }
+
+function alatina_base_get_meta_description() {
+    if (is_front_page() || is_home()) {
+        return 'Sitio oficial de la Escuela América Latina, comunidad educativa orientada a la formación integral, la diversidad, el medio ambiente, el arte, el deporte y el desarrollo de oportunidades para sus estudiantes.';
+    }
+
+    if (is_page('noticias')) {
+        return 'Noticias, comunicados y actividades de la Escuela América Latina para su comunidad educativa.';
+    }
+
+    if (is_page('documentos')) {
+        return 'Documentos institucionales, reglamentos y material informativo de la Escuela América Latina.';
+    }
+
+    if (is_page('calendario-escolar')) {
+        return 'Calendario de actividades escolares, reuniones, actos y eventos institucionales de la Escuela América Latina.';
+    }
+
+    if (is_page('contacto')) {
+        return 'Información de contacto, ubicación y horarios de atención de la Escuela América Latina.';
+    }
+
+    if (is_page('asignaturas')) {
+        return 'Asignaturas, áreas de aprendizaje y actividades formativas de la Escuela América Latina.';
+    }
+
+    if (is_singular('post')) {
+        return 'Noticias, comunicados y actividades de la Escuela América Latina para su comunidad educativa.';
+    }
+
+    if (is_page()) {
+        $excerpt = trim(wp_strip_all_tags(get_the_excerpt()));
+        if ($excerpt !== '') {
+            return wp_trim_words($excerpt, 28, '');
+        }
+    }
+
+    return 'Escuela América Latina: información institucional, noticias, documentos, calendario escolar y contacto para la comunidad educativa.';
+}
+
+function alatina_base_output_meta_description() {
+    $description = trim((string) alatina_base_get_meta_description());
+
+    if ($description === '') {
+        return;
+    }
+
+    echo '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
+}
+add_action('wp_head', 'alatina_base_output_meta_description', 6);
 
 function alatina_base_primary_menu_fallback() {
     echo '<ul id="primary-menu" class="navbar-nav primary-menu-list align-items-xl-center">';

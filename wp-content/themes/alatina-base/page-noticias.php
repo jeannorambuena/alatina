@@ -33,14 +33,14 @@ if ($news_query->have_posts()) {
             <div class="page-hero__grid">
               <div class="page-hero__main">
                 <p class="eyebrow"><?php esc_html_e('Noticias', 'alatina-base'); ?></p>
-                <h1><?php the_title(); ?></h1>
+                <h1><?php esc_html_e('Noticias', 'alatina-base'); ?></h1>
 
                 <p class="lead">
                   <?php
                   if (has_excerpt()) {
                       echo esc_html(get_the_excerpt());
                   } else {
-                      esc_html_e('Revise comunicados, actividades, hitos y publicaciones recientes de la comunidad educativa.', 'alatina-base');
+                      esc_html_e('Noticias, comunicados y actividades de la Escuela América Latina para su comunidad educativa.', 'alatina-base');
                   }
                   ?>
                 </p>
@@ -149,13 +149,31 @@ if ($news_query->have_posts()) {
             </article>
           <?php endforeach; ?>
           <?php wp_reset_postdata(); ?>
+
+          <?php if (count($grid_posts) < 2) : ?>
+            <?php for ($i = count($grid_posts); $i < 2; $i++) : ?>
+              <article class="content-card news-card news-card--archive news-card--archive-temporary">
+                <div class="news-card--archive__placeholder">
+                  <span><?php esc_html_e('[CONTENIDO TEMPORAL]', 'alatina-base'); ?></span>
+                </div>
+                <div class="news-card--archive__body">
+                  <div class="news-card__meta"><?php esc_html_e('Información en validación', 'alatina-base'); ?></div>
+                  <h2 class="news-card__title"><?php esc_html_e('[CONTENIDO TEMPORAL] Información para familias en validación', 'alatina-base'); ?></h2>
+                  <div class="news-card__excerpt">
+                    <p><?php esc_html_e('Este contenido es temporal y será reemplazado por información oficial entregada por la escuela.', 'alatina-base'); ?></p>
+                  </div>
+                  <span class="news-card__link"><?php esc_html_e('Pendiente de actualización', 'alatina-base'); ?></span>
+                </div>
+              </article>
+            <?php endfor; ?>
+          <?php endif; ?>
         </div>
       <?php elseif (!$featured_post instanceof WP_Post) : ?>
         <article class="content-card news-card news-card--archive-empty">
-          <div class="news-card__meta"><?php esc_html_e('Sin publicaciones', 'alatina-base'); ?></div>
-          <h2 class="news-card__title"><?php esc_html_e('Aún no hay noticias publicadas en esta sección', 'alatina-base'); ?></h2>
+          <div class="news-card__meta"><?php esc_html_e('Información en validación', 'alatina-base'); ?></div>
+          <h2 class="news-card__title"><?php esc_html_e('[CONTENIDO TEMPORAL] La sección de noticias está lista para recibir publicaciones oficiales', 'alatina-base'); ?></h2>
           <div class="news-card__excerpt">
-            <p><?php esc_html_e('Cuando se publiquen noticias, aparecerán aquí con su imagen destacada, resumen y acceso al detalle.', 'alatina-base'); ?></p>
+            <p><?php esc_html_e('Mientras se incorporan noticias reales, esta sección permanecerá activa con estructura editorial preparada para comunicados, actividades y avisos de la comunidad educativa.', 'alatina-base'); ?></p>
           </div>
         </article>
       <?php endif; ?>

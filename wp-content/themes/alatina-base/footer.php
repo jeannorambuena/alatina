@@ -33,6 +33,13 @@
             <li><a href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($link['label']); ?></a></li>
           <?php endforeach; ?>
         </ul>
+        <p class="site-footer__heading mt-4"><?php esc_html_e('Redes sociales', 'alatina-base'); ?></p>
+        <p class="site-footer__text site-footer__text--small"><?php esc_html_e('Redes sociales oficiales en actualización.', 'alatina-base'); ?></p>
+        <ul class="footer-links footer-links--social">
+          <li><a href="<?php echo esc_url(alatina_base_get_rrss_url('facebook')); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Facebook', 'alatina-base'); ?></a></li>
+          <li><a href="<?php echo esc_url(alatina_base_get_rrss_url('instagram')); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('Instagram', 'alatina-base'); ?></a></li>
+          <li><a href="<?php echo esc_url(alatina_base_get_rrss_url('youtube')); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e('YouTube', 'alatina-base'); ?></a></li>
+        </ul>
       </div>
     </div>
     <div class="site-footer__bottom d-flex flex-column flex-lg-row justify-content-between gap-2 mt-5">

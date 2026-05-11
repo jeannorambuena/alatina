@@ -31,11 +31,33 @@ get_header();
           <div class="content-card">
             <h2><?php esc_html_e('Documentos disponibles', 'alatina-base'); ?></h2>
             <ul>
-              <li><a href="https://wwwfs.mineduc.cl/Archivos/infoescuelas/documentos/2825/ProyectoEducativo2825.pdf" target="_blank">PEI 2026</a></li>
-              <li><a href="https://wwwfs.mineduc.cl/Archivos/infoescuelas/documentos/2825/ReglamentodeConvivencia2825.pdf" target="_blank">Reglamento Interno 2025</a></li>
-              <li><a href="https://wwwfs.mineduc.cl/Archivos/infoescuelas/documentos/2825/ReglamentoDeEvaluacion2825.pdf" target="_blank">Reglamento de Evaluación 2025</a></li>
+              <li><a href="https://wwwfs.mineduc.cl/Archivos/infoescuelas/documentos/2825/ProyectoEducativo2825.pdf" target="_blank" rel="noopener noreferrer">PEI 2026</a></li>
+              <li><a href="https://wwwfs.mineduc.cl/Archivos/infoescuelas/documentos/2825/ReglamentodeConvivencia2825.pdf" target="_blank" rel="noopener noreferrer">Reglamento Interno 2025</a></li>
+              <li><a href="https://wwwfs.mineduc.cl/Archivos/infoescuelas/documentos/2825/ReglamentoDeEvaluacion2825.pdf" target="_blank" rel="noopener noreferrer">Reglamento de Evaluación 2025</a></li>
             </ul>
+
             <div class="entry-content entry-content--page">
+              <div class="alert alert-light border rounded-4 mb-4" role="status">
+                <strong><?php esc_html_e('Información en actualización.', 'alatina-base'); ?></strong>
+                <span><?php esc_html_e(' Esta sección mantendrá visibles los documentos ya publicados y agregará nuevos archivos cuando la escuela entregue sus versiones oficiales.', 'alatina-base'); ?></span>
+              </div>
+
+              <h3><?php esc_html_e('Categorías preparadas', 'alatina-base'); ?></h3>
+              <ul>
+                <li><?php esc_html_e('Proyecto Educativo', 'alatina-base'); ?></li>
+                <li><?php esc_html_e('Reglamentos', 'alatina-base'); ?></li>
+                <li><?php esc_html_e('Convivencia escolar', 'alatina-base'); ?></li>
+                <li><?php esc_html_e('Evaluación', 'alatina-base'); ?></li>
+                <li><?php esc_html_e('Formularios', 'alatina-base'); ?></li>
+                <li><?php esc_html_e('Centro de Padres', 'alatina-base'); ?></li>
+              </ul>
+
+              <h3><?php esc_html_e('Pendientes de carga oficial', 'alatina-base'); ?></h3>
+              <ul>
+                <li><?php esc_html_e('Documento pendiente de carga oficial', 'alatina-base'); ?></li>
+                <li><?php esc_html_e('Documento pendiente de carga oficial', 'alatina-base'); ?></li>
+              </ul>
+
               <?php the_content(); ?>
             </div>
           </div>
