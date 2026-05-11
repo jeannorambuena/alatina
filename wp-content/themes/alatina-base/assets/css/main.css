@@ -387,7 +387,7 @@ a:hover {
 .home-enrollment-toast {
   position: fixed;
   inset: 0;
-  z-index: 1190;
+  z-index: 1600;
   display: flex;
   align-items: center !important;
   justify-content: center !important;
@@ -410,8 +410,9 @@ a:hover {
 
 .home-enrollment-toast__dialog {
   position: fixed;
-  top: 38%;
+  top: 58%;
   left: 50%;
+  z-index: 1601;
   width: min(64vw, 920px);
   min-height: 37vh;
   max-height: min(39vh, 600px);
@@ -721,18 +722,31 @@ a:hover {
   position: absolute;
   top: .78rem;
   right: .78rem;
-  z-index: 3;
+  z-index: 9999;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border: 1px solid rgba(18, 58, 102, .14);
+  width: 3.2rem;
+  min-width: 3rem;
+  height: 3.2rem;
+  min-height: 3rem;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .9);
   border-radius: 999px;
-  background: rgba(255, 255, 255, .94);
-  color: #10375f;
-  box-shadow: 0 14px 26px rgba(9, 31, 64, .17);
+  background: rgba(16, 55, 95, .95);
+  color: #ffffff;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 900;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  box-shadow: 0 16px 32px rgba(9, 31, 64, .26);
   backdrop-filter: blur(10px);
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease;
 }
 
@@ -740,14 +754,14 @@ a:hover {
 .home-enrollment-toast__close:focus-visible {
   background: #ffffff;
   transform: translateY(-1px) scale(1.03);
-  box-shadow: 0 17px 30px rgba(9, 31, 64, .22);
+  box-shadow: 0 17px 30px rgba(9, 31, 64, .24);
 }
 
-.home-enrollment-toast__close span {
-  font-size: 1.75rem;
-  line-height: .9;
-  font-weight: 900;
+.home-enrollment-toast__close:focus-visible {
+  outline: 2px solid rgba(16, 55, 95, .28);
+  outline-offset: 2px;
 }
+
 
 .home-enrollment-toast__eyebrow {
   display: inline-flex;
@@ -1931,16 +1945,16 @@ a:hover {
   pointer-events: none;
 }
 
-.page-hero--informacion-escolar .page-hero__surface--enhanced > *,
-.page-hero--mision-vision .page-hero__surface--enhanced > *,
-.page-hero--reglamento-interno .page-hero__surface--enhanced > *,
-.page-hero--proyecto-educativo .page-hero__surface--enhanced > *,
-.page-hero--mapa-ubicacion .page-hero__surface--enhanced > *,
-.page-hero--documentos .page-hero__surface--enhanced > *,
-.page-hero--contacto .page-hero__surface--enhanced > *,
-.page-hero--rrss-youtube .page-hero__surface--enhanced > *,
-.page-hero--rrss-instagram .page-hero__surface--enhanced > *,
-.page-hero--galeria .page-hero__surface--enhanced > * {
+.page-hero--informacion-escolar .page-hero__surface--enhanced>*,
+.page-hero--mision-vision .page-hero__surface--enhanced>*,
+.page-hero--reglamento-interno .page-hero__surface--enhanced>*,
+.page-hero--proyecto-educativo .page-hero__surface--enhanced>*,
+.page-hero--mapa-ubicacion .page-hero__surface--enhanced>*,
+.page-hero--documentos .page-hero__surface--enhanced>*,
+.page-hero--contacto .page-hero__surface--enhanced>*,
+.page-hero--rrss-youtube .page-hero__surface--enhanced>*,
+.page-hero--rrss-instagram .page-hero__surface--enhanced>*,
+.page-hero--galeria .page-hero__surface--enhanced>* {
   position: relative;
   z-index: 1;
 }
@@ -2635,7 +2649,7 @@ a:hover {
     width: min(88vw, 720px);
     min-height: min(49vh, 30rem);
     max-height: none;
-    top: 38%;
+    top: 58%;
     left: 50%;
   }
 
@@ -2683,8 +2697,9 @@ a:hover {
     min-height: auto;
     max-height: calc(100vh - 1.7rem);
     margin: 0;
-    top: 38%;
+    top: 58%;
     left: 50%;
+    padding-top: 4.5rem;
   }
 
   .home-enrollment-toast__card {
@@ -2712,10 +2727,20 @@ a:hover {
   }
 
   .home-enrollment-toast__close {
-    top: .62rem;
-    right: .62rem;
-    width: 2.45rem;
-    height: 2.45rem;
+    position: fixed;
+    top: max(1.75rem, calc(env(safe-area-inset-top, 0px) + 1.25rem));
+    right: max(1rem, calc(env(safe-area-inset-right, 0px) + 1rem));
+    z-index: 9999;
+    width: 3.4rem;
+    min-width: 3rem;
+    height: 3.4rem;
+    min-height: 3rem;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, .9);
+    background: rgba(16, 55, 95, .95);
+    color: #ffffff;
+    box-shadow: 0 18px 30px rgba(9, 31, 64, .28);
+    font-size: 2.25rem;
   }
 
   .home-enrollment-toast__card h2 {
@@ -3024,11 +3049,11 @@ a:hover {
   padding-bottom: 2rem !important;
 }
 
-.cgp-page__hero + .cgp-page__overview,
-.cgp-page__overview + .cgp-page__sections,
-.cgp-noticias-page__hero + .cgp-noticias-page__intro-section,
-.cgp-noticias-page__hero + .cgp-noticias-page__stream,
-.cgp-noticias-page__intro-section + .cgp-noticias-page__stream {
+.cgp-page__hero+.cgp-page__overview,
+.cgp-page__overview+.cgp-page__sections,
+.cgp-noticias-page__hero+.cgp-noticias-page__intro-section,
+.cgp-noticias-page__hero+.cgp-noticias-page__stream,
+.cgp-noticias-page__intro-section+.cgp-noticias-page__stream {
   position: relative;
   margin-top: -1.05rem !important;
 }
@@ -3039,82 +3064,82 @@ a:hover {
 }
 
 /* Réplica visual de separación tipo /quienes-somos/ */
-.page-hero--mision-vision + .page-section,
-.page-hero--proyecto-educativo + .page-section,
-.page-hero--reglamento-interno + .page-section,
-.page-hero--mapa-ubicacion + .page-section,
-.page-hero--documentos + .page-section,
-.page-hero--contacto + .page-section,
-.page-hero--rrss-youtube + .page-section,
-.page-hero--rrss-instagram + .page-section,
-.page-hero--galeria + .page-section,
-.page-hero--cgp-integrantes + .page-section,
-.page-hero--cgp-transparencia + .page-section {
+.page-hero--mision-vision+.page-section,
+.page-hero--proyecto-educativo+.page-section,
+.page-hero--reglamento-interno+.page-section,
+.page-hero--mapa-ubicacion+.page-section,
+.page-hero--documentos+.page-section,
+.page-hero--contacto+.page-section,
+.page-hero--rrss-youtube+.page-section,
+.page-hero--rrss-instagram+.page-section,
+.page-hero--galeria+.page-section,
+.page-hero--cgp-integrantes+.page-section,
+.page-hero--cgp-transparencia+.page-section {
   position: relative;
   margin-top: -1.05rem !important;
 }
 
-.page-hero--mision-vision + .page-section > .container,
-.page-hero--proyecto-educativo + .page-section > .container,
-.page-hero--reglamento-interno + .page-section > .container,
-.page-hero--mapa-ubicacion + .page-section > .container,
-.page-hero--documentos + .page-section > .container,
-.page-hero--contacto + .page-section > .container,
-.page-hero--rrss-youtube + .page-section > .container,
-.page-hero--rrss-instagram + .page-section > .container,
-.page-hero--galeria + .page-section > .container,
-.page-hero--cgp-integrantes + .page-section > .container,
-.page-hero--cgp-transparencia + .page-section > .container {
+.page-hero--mision-vision+.page-section>.container,
+.page-hero--proyecto-educativo+.page-section>.container,
+.page-hero--reglamento-interno+.page-section>.container,
+.page-hero--mapa-ubicacion+.page-section>.container,
+.page-hero--documentos+.page-section>.container,
+.page-hero--contacto+.page-section>.container,
+.page-hero--rrss-youtube+.page-section>.container,
+.page-hero--rrss-instagram+.page-section>.container,
+.page-hero--galeria+.page-section>.container,
+.page-hero--cgp-integrantes+.page-section>.container,
+.page-hero--cgp-transparencia+.page-section>.container {
   margin-top: 0 !important;
 }
 
-.page-hero--mision-vision + .page-section .row,
-.page-hero--proyecto-educativo + .page-section .row,
-.page-hero--reglamento-interno + .page-section .row,
-.page-hero--mapa-ubicacion + .page-section .row,
-.page-hero--documentos + .page-section .row,
-.page-hero--contacto + .page-section .row,
-.page-hero--rrss-youtube + .page-section .row,
-.page-hero--rrss-instagram + .page-section .row,
-.page-hero--galeria + .page-section .row,
-.page-hero--cgp-integrantes + .page-section .row,
-.page-hero--cgp-transparencia + .page-section .row {
+.page-hero--mision-vision+.page-section .row,
+.page-hero--proyecto-educativo+.page-section .row,
+.page-hero--reglamento-interno+.page-section .row,
+.page-hero--mapa-ubicacion+.page-section .row,
+.page-hero--documentos+.page-section .row,
+.page-hero--contacto+.page-section .row,
+.page-hero--rrss-youtube+.page-section .row,
+.page-hero--rrss-instagram+.page-section .row,
+.page-hero--galeria+.page-section .row,
+.page-hero--cgp-integrantes+.page-section .row,
+.page-hero--cgp-transparencia+.page-section .row {
   --bs-gutter-y: .5rem;
 }
 
-.page-hero--mision-vision + .page-section .card,
-.page-hero--mision-vision + .page-section .content-card,
-.page-hero--mision-vision + .page-section .page-sidecard,
-.page-hero--proyecto-educativo + .page-section .card,
-.page-hero--proyecto-educativo + .page-section .content-card,
-.page-hero--proyecto-educativo + .page-section .page-sidecard,
-.page-hero--reglamento-interno + .page-section .card,
-.page-hero--reglamento-interno + .page-section .content-card,
-.page-hero--reglamento-interno + .page-section .page-sidecard,
-.page-hero--mapa-ubicacion + .page-section .card,
-.page-hero--mapa-ubicacion + .page-section .content-card,
-.page-hero--mapa-ubicacion + .page-section .page-sidecard,
-.page-hero--documentos + .page-section .card,
-.page-hero--documentos + .page-section .content-card,
-.page-hero--documentos + .page-section .page-sidecard,
-.page-hero--contacto + .page-section .card,
-.page-hero--contacto + .page-section .content-card,
-.page-hero--contacto + .page-section .page-sidecard,
-.page-hero--rrss-youtube + .page-section .card,
-.page-hero--rrss-youtube + .page-section .content-card,
-.page-hero--rrss-youtube + .page-section .page-sidecard,
-.page-hero--rrss-instagram + .page-section .card,
-.page-hero--rrss-instagram + .page-section .content-card,
-.page-hero--rrss-instagram + .page-section .page-sidecard,
-.page-hero--galeria + .page-section .card,
-.page-hero--galeria + .page-section .content-card,
-.page-hero--galeria + .page-section .page-sidecard,
-.page-hero--cgp-integrantes + .page-section .card,
-.page-hero--cgp-integrantes + .page-section .content-card,
-.page-hero--cgp-integrantes + .page-section .page-sidecard,
-.page-hero--cgp-transparencia + .page-section .card,
-.page-hero--cgp-transparencia + .page-section .content-card,
-.page-hero--cgp-transparencia + .page-section .page-sidecard {
+.page-hero--mision-vision+.page-section .card,
+.page-hero--mision-vision+.page-section .content-card,
+.page-hero--mision-vision+.page-section .page-sidecard,
+.page-hero--proyecto-educativo+.page-section .card,
+.page-hero--proyecto-educativo+.page-section .content-card,
+.page-hero--proyecto-educativo+.page-section .page-sidecard,
+.page-hero--reglamento-interno+.page-section .card,
+.page-hero--reglamento-interno+.page-section .content-card,
+.page-hero--reglamento-interno+.page-section .page-sidecard,
+.page-hero--mapa-ubicacion+.page-section .card,
+.page-hero--mapa-ubicacion+.page-section .content-card,
+.page-hero--mapa-ubicacion+.page-section .page-sidecard,
+.page-hero--documentos+.page-section .card,
+.page-hero--documentos+.page-section .content-card,
+.page-hero--documentos+.page-section .page-sidecard,
+.page-hero--contacto+.page-section .card,
+.page-hero--contacto+.page-section .content-card,
+.page-hero--contacto+.page-section .page-sidecard,
+.page-hero--rrss-youtube+.page-section .card,
+.page-hero--rrss-youtube+.page-section .content-card,
+.page-hero--rrss-youtube+.page-section .page-sidecard,
+.page-hero--rrss-instagram+.page-section .card,
+.page-hero--rrss-instagram+.page-section .content-card,
+.page-hero--rrss-instagram+.page-section .page-sidecard,
+.page-hero--galeria+.page-section .card,
+.page-hero--galeria+.page-section .content-card,
+.page-hero--galeria+.page-section .page-sidecard,
+.page-hero--cgp-integrantes+.page-section .card,
+.page-hero--cgp-integrantes+.page-section .content-card,
+.page-hero--cgp-integrantes+.page-section .page-sidecard,
+.page-hero--cgp-transparencia+.page-section .card,
+.page-hero--cgp-transparencia+.page-section .content-card,
+.page-hero--cgp-transparencia+.page-section .page-sidecard {
   margin-top: 0 !important;
 }
 
@@ -3133,7 +3158,7 @@ a:hover {
 
 .gallery-hub__demo-header p:last-child,
 .gallery-hub__placeholder p:last-child,
-.gallery-hub__albums .entry-content > *:last-child {
+.gallery-hub__albums .entry-content>*:last-child {
   margin-bottom: 0;
 }
 
@@ -3394,7 +3419,7 @@ a:hover {
   }
 }
 
-.cgp-noticias-page__intro-section + .cgp-noticias-page__stream {
+.cgp-noticias-page__intro-section+.cgp-noticias-page__stream {
   margin-top: .85rem !important;
 }
 
@@ -3445,10 +3470,10 @@ a:hover {
   pointer-events: none;
 }
 
-.cgp-page__hero-card > *,
-.cgp-noticias-page__hero-card > *,
-.page-hero--cgp-integrantes .page-hero__surface--enhanced > *,
-.page-hero--cgp-transparencia .page-hero__surface--enhanced > * {
+.cgp-page__hero-card>*,
+.cgp-noticias-page__hero-card>*,
+.page-hero--cgp-integrantes .page-hero__surface--enhanced>*,
+.page-hero--cgp-transparencia .page-hero__surface--enhanced>* {
   position: relative;
   z-index: 1;
 }
@@ -3694,7 +3719,7 @@ a:hover {
   pointer-events: none;
 }
 
-.institutional-page--quienes-somos .institutional-page__intro-inner > * {
+.institutional-page--quienes-somos .institutional-page__intro-inner>* {
   position: relative;
   z-index: 1;
 }

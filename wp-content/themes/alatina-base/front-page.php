@@ -45,10 +45,8 @@ get_header();
 <main class="site-main homepage-school">
   <div class="home-enrollment-toast" data-home-enrollment-toast aria-live="polite">
     <div class="home-enrollment-toast__backdrop" data-home-enrollment-close></div>
-    <div class="home-enrollment-toast__dialog" role="dialog" aria-label="<?php esc_attr_e('Matrículas abiertas 2026', 'alatina-base'); ?>">
-      <button type="button" class="home-enrollment-toast__close" data-home-enrollment-close aria-label="<?php esc_attr_e('Cerrar aviso de matrículas', 'alatina-base'); ?>">
-        <span aria-hidden="true">×</span>
-      </button>
+    <div class="home-enrollment-toast__dialog" style="top: 58% !important;" role="dialog" aria-label="<?php esc_attr_e('Matrículas abiertas 2026', 'alatina-base'); ?>">
+      <button type="button" class="home-enrollment-toast__close" data-home-enrollment-close aria-label="<?php esc_attr_e('Cerrar aviso de matrículas', 'alatina-base'); ?>">×</button>
 
       <a class="home-enrollment-toast__card" href="<?php echo esc_url($contact_url); ?>">
         <div class="home-enrollment-toast__grid">
@@ -387,6 +385,11 @@ get_header();
       return;
     }
 
+    var storageKey = 'alatinaHomeEnrollmentToastHidden';
+    
+    // Limpiar sessionStorage para que siempre muestre el popup
+    sessionStorage.removeItem(storageKey);
+
     var closeElements = toast.querySelectorAll('[data-home-enrollment-close]');
     var autoHideTimer = window.setTimeout(closeToast, 10000);
 
@@ -396,6 +399,7 @@ get_header();
       }
 
       toast.classList.add('is-closing');
+      sessionStorage.setItem(storageKey, '1');
 
       window.setTimeout(function () {
         toast.classList.add('is-hidden');
